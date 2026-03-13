@@ -1,0 +1,93 @@
+{
+  "name": "vicert-marketplace",
+  "owner": {
+    "name": "vicert-healthcare"
+  },
+  "metadata": {
+    "description": "Vicert community Claude Code plugin marketplace",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "quality-review",
+      "source": "./plugins/code-quality/quality-review",
+      "description": "Adds a /quality-review skill for thorough code reviews covering bugs, security, and performance",
+      "version": "1.0.0",
+      "category": "code-quality",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "vicert-healthcare"
+      },
+      "tags": [
+        "code-review",
+        "security",
+        "performance",
+        "bugs"
+      ],
+      "license": "MIT"
+    },
+    {
+      "name": "k8s-helper",
+      "source": "./plugins/devops/k8s-helper",
+      "description": "Kubernetes helper skill for generating and troubleshooting K8s manifests, Helm charts, and cluster issues",
+      "version": "1.0.0",
+      "category": "devops",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "vicert-healthcare"
+      },
+      "tags": [
+        "kubernetes",
+        "k8s",
+        "helm",
+        "devops",
+        "containers"
+      ],
+      "license": "MIT"
+    },
+    {
+      "name": "commit-helper",
+      "source": "./plugins/productivity/commit-helper",
+      "description": "Git commit workflow commands for conventional commits, interactive staging, and PR descriptions",
+      "version": "1.0.0",
+      "category": "productivity",
+      "components": [
+        "commands"
+      ],
+      "author": {
+        "name": "vicert-healthcare"
+      },
+      "tags": [
+        "git",
+        "commit",
+        "conventional-commits",
+        "workflow"
+      ],
+      "license": "MIT"
+    },
+    {
+      "name": "smart-context",
+      "source": "./plugins/productivity/smart-context",
+      "description": "An agent that automatically gathers relevant project context before answering questions",
+      "version": "1.0.0",
+      "category": "productivity",
+      "components": [
+        "agents"
+      ],
+      "author": {
+        "name": "vicert-healthcare"
+      },
+      "tags": [
+        "context",
+        "agent",
+        "project-understanding",
+        "codebase"
+      ],
+      "license": "MIT"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "smart-context",
+  "version": "1.0.0",
+  "description": "An agent that automatically gathers relevant project context before answering questions",
+  "author": {
+    "name": "vicert-healthcare"
+  },
+  "keywords": ["context", "agent", "project-understanding", "codebase"],
+  "license": "MIT"
+}

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.env
+.env.*
+
+# Astro
+site/dist/
+site/.astro/
+site/node_modules/
+
+# Build artifacts

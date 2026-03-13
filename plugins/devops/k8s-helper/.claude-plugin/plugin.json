@@ -1,0 +1,10 @@
+{
+  "name": "k8s-helper",
+  "version": "1.0.0",
+  "description": "Kubernetes helper skill for generating and troubleshooting K8s manifests, Helm charts, and cluster issues",
+  "author": {
+    "name": "vicert-healthcare"
+  },
+  "keywords": ["kubernetes", "k8s", "helm", "devops", "containers"],
+  "license": "MIT"
+}

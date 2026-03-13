@@ -1,0 +1,19 @@
+{
+  "name": "vicert-claude-marketplace",
+  "version": "1.0.0",
+  "description": "Vicert community Claude Code plugin marketplace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:marketplace": "node scripts/build-marketplace.js",
+    "validate": "node scripts/validate.js",
+    "build:site": "npm run build:marketplace && npm run --prefix site build",
+    "dev:site": "npm run --prefix site dev",
+    "build": "npm run build:marketplace && npm run --prefix site build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vicert-healthcare/vicert-claude-marketplace"
+  },
+  "license": "MIT"
+}

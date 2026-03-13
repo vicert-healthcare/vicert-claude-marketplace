@@ -1,0 +1,48 @@
+name: Validate Plugin PR
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "plugins/**"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate plugins
+        run: node scripts/validate.js
+
+      - name: Test marketplace.json generation
+        run: node scripts/build-marketplace.js
+
+      - name: Verify marketplace.json is valid JSON
+        run: python3 -c "import json; json.load(open('.claude-plugin/marketplace.json'))"
+
+      - name: Check for version bump on existing plugins
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'plugins/**/.claude-plugin/plugin.json' || true)
+            if [ -n "$CHANGED" ]; then
+              echo "Modified plugin manifests detected. Checking version bumps..."
+              for file in $CHANGED; do
+                if git show origin/${{ github.base_ref }}:$file > /dev/null 2>&1; then
+                  OLD_VERSION=$(git show origin/${{ github.base_ref }}:$file | python3 -c "import json,sys; print(json.load(sys.stdin).get('version',''))" 2>/dev/null || echo "")
+                  NEW_VERSION=$(python3 -c "import json; print(json.load(open('$file')).get('version',''))" 2>/dev/null || echo "")
+                  if [ "$OLD_VERSION" = "$NEW_VERSION" ] && [ -n "$OLD_VERSION" ]; then
+                    echo "::warning file=$file::Version not bumped (still $OLD_VERSION). Remember to bump the version when updating a plugin."
+                  else
+                    echo "✓ $file: $OLD_VERSION → $NEW_VERSION"
+                  fi
+                fi
+              done
+            fi
+          fi

@@ -1,0 +1,10 @@
+{
+  "name": "quality-review",
+  "version": "1.0.0",
+  "description": "Adds a /quality-review skill for thorough code reviews covering bugs, security, and performance",
+  "author": {
+    "name": "vicert-healthcare"
+  },
+  "keywords": ["code-review", "security", "performance", "bugs"],
+  "license": "MIT"
+}
