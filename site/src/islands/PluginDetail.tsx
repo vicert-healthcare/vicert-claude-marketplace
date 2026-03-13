@@ -1,5 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import { fetchCatalog, fetchPluginReadme } from "../lib/github-catalog";
+import { fetchCatalog, fetchPluginReadme, BASE_PATH } from "../lib/github-catalog";
 import type { PluginMeta } from "../lib/github-catalog";
 import { marked } from "marked";
 import ChangeHistory from "./ChangeHistory";
@@ -100,7 +100,7 @@ export default function PluginDetail() {
     return (
       <div class="text-center py-16">
         <p class="text-red-400 mb-2">{error || "Plugin not found"}</p>
-        <a href="/" class="text-brand-400 hover:text-brand-300 text-sm transition-colors">
+        <a href={BASE_PATH} class="text-brand-400 hover:text-brand-300 text-sm transition-colors">
           Back to marketplace
         </a>
       </div>
@@ -117,12 +117,12 @@ export default function PluginDetail() {
   return (
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <nav class="mb-8 text-sm text-gray-500">
-        <a href="/" class="hover:text-gray-300 transition-colors">
+        <a href={BASE_PATH} class="hover:text-gray-300 transition-colors">
           Marketplace
         </a>
         <span class="mx-2">/</span>
         <a
-          href={`/?category=${plugin.category}`}
+          href={`${BASE_PATH}?category=${plugin.category}`}
           class="hover:text-gray-300 transition-colors capitalize"
         >
           {plugin.category}
@@ -139,7 +139,7 @@ export default function PluginDetail() {
               <p class="text-lg text-gray-400">{plugin.description}</p>
             </div>
             <a
-              href={`/editor?plugin=${plugin.slug}`}
+              href={`${BASE_PATH}editor?plugin=${plugin.slug}`}
               class="text-sm bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
             >
               Edit
@@ -183,7 +183,7 @@ export default function PluginDetail() {
                 <dt class="text-gray-500">Category</dt>
                 <dd>
                   <a
-                    href={`/?category=${plugin.category}`}
+                    href={`${BASE_PATH}?category=${plugin.category}`}
                     class="text-brand-400 hover:text-brand-300 capitalize transition-colors"
                   >
                     {plugin.category}

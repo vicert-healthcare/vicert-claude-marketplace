@@ -4,7 +4,7 @@ import preact from "@astrojs/preact";
 
 export default defineConfig({
   site: "https://vicert-healthcare.github.io",
-  base: "/",
+  base: "/vicert-claude-marketplace/",
   integrations: [tailwind(), preact({ compat: true })],
   output: "static",
 });

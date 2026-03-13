@@ -1,5 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import { fetchCatalog } from "../lib/github-catalog";
+import { fetchCatalog, BASE_PATH } from "../lib/github-catalog";
 import type { PluginMeta, CatalogData } from "../lib/github-catalog";
 
 const componentIcons: Record<string, string> = {
@@ -14,7 +14,7 @@ const componentIcons: Record<string, string> = {
 function PluginCard({ plugin }: { plugin: PluginMeta }) {
   return (
     <a
-      href={`/plugin/?slug=${plugin.slug}`}
+      href={`${BASE_PATH}plugin/?slug=${plugin.slug}`}
       class="group block bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-brand-500/50 hover:bg-gray-900/80 transition-all duration-200"
     >
       <div class="flex items-start justify-between mb-3">
@@ -169,7 +169,7 @@ export default function PluginBrowser() {
           <span class="text-gray-500 text-base font-normal ml-2">({filtered.length})</span>
         </h2>
         <a
-          href="/editor"
+          href={`${BASE_PATH}editor`}
           class="text-sm bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg transition-colors"
         >
           + Add Plugin

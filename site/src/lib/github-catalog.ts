@@ -3,6 +3,8 @@ const REPO = "vicert-claude-marketplace";
 const BRANCH = "main";
 const RAW_BASE = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 
+export const BASE_PATH = "/vicert-claude-marketplace/";
+
 export interface PluginMeta {
   name: string;
   slug: string;
