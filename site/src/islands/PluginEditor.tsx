@@ -882,7 +882,9 @@ export default function PluginEditor() {
 
         {isMetadataValid && hasComponents ? (
           <div>
-            <h3 class="text-sm text-gray-400 mb-2">Files that will be created:</h3>
+            <h3 class="text-sm text-gray-400 mb-2">
+              {isEditing ? "Files that will be created or updated:" : "Files that will be created:"}
+            </h3>
             <ul class="text-sm font-mono text-gray-300 space-y-1 mb-6 bg-gray-800 rounded-lg p-4 max-h-64 overflow-y-auto">
               {Object.keys(buildFiles()).map((path) => (
                 <li key={path}>📄 {path}</li>
@@ -892,7 +894,9 @@ export default function PluginEditor() {
             {!token ? (
               <div class="space-y-3">
                 <p class="text-sm text-gray-400">
-                  Sign in with GitHub to submit your plugin as a pull request.
+                  {isEditing
+                    ? "Authenticate with GitHub to submit your changes as a pull request."
+                    : "Sign in with GitHub to submit your plugin as a pull request."}
                 </p>
                 <div class="flex flex-wrap gap-3">
                   <button onClick={handleDeviceFlow} class={btnCls("brand")}>
