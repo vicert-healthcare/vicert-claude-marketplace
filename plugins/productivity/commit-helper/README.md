@@ -22,6 +22,8 @@ Generates a pull request description from the current branch's commits:
 
 ## Install
 
+## Version 1.0.1 Test
+
 ```bash
 /plugin install commit-helper@vicert-marketplace
 ```
