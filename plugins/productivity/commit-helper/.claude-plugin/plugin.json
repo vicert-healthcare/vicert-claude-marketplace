@@ -1,10 +1,15 @@
 {
   "name": "commit-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Git commit workflow commands for conventional commits, interactive staging, and PR descriptions",
   "author": {
     "name": "vicert-healthcare"
   },
-  "keywords": ["git", "commit", "conventional-commits", "workflow"],
+  "keywords": [
+    "git",
+    "commit",
+    "conventional-commits",
+    "workflow"
+  ],
   "license": "MIT"
 }
