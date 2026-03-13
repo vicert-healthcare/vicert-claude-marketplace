@@ -49,7 +49,7 @@ disable-model-invocation: true
 Your command instructions here.
 `;
 
-export default function PluginEditor({ categories }: Props) {
+export default function PluginEditor({ categories = [] }: Props) {
   const editSlug =
     typeof window !== "undefined"
       ? new URLSearchParams(window.location.search).get("plugin")
