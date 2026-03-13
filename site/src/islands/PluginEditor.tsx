@@ -588,50 +588,58 @@ export default function PluginEditor() {
       };
 
       const userRes = await fetch("https://api.github.com/user", { headers });
+      if (!userRes.ok) throw new Error("Failed to fetch GitHub user — is your token valid?");
       const user = await userRes.json();
-      const forkOwner = user.login;
-
-      try {
-        await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/forks`, {
-          method: "POST",
-          headers,
-        });
-        await new Promise((r) => setTimeout(r, 3000));
-      } catch {}
 
       const mainRef = await fetch(
-        `https://api.github.com/repos/${forkOwner}/${REPO_NAME}/git/ref/heads/main`,
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/ref/heads/main`,
         { headers }
       );
+      if (!mainRef.ok) throw new Error("Failed to read main branch");
       const mainData = await mainRef.json();
       const baseSha = mainData.object.sha;
 
       const branchPrefix = isEditing ? "update-plugin" : "add-plugin";
-      const branchName = `${branchPrefix}/${data.name}`;
-      try {
-        await fetch(`https://api.github.com/repos/${forkOwner}/${REPO_NAME}/git/refs`, {
+      const branchName = `${branchPrefix}/${user.login}/${data.name}`;
+
+      const branchRes = await fetch(
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/refs`,
+        {
           method: "POST",
           headers,
           body: JSON.stringify({ ref: `refs/heads/${branchName}`, sha: baseSha }),
-        });
-      } catch {}
+        }
+      );
+      if (!branchRes.ok) {
+        const existing = await branchRes.json();
+        if (existing.message?.includes("Reference already exists")) {
+          await fetch(
+            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/refs/heads/${branchName}`,
+            {
+              method: "PATCH",
+              headers,
+              body: JSON.stringify({ sha: baseSha, force: true }),
+            }
+          );
+        } else {
+          throw new Error(existing.message || "Failed to create branch");
+        }
+      }
 
       const files = buildFiles();
 
       for (const [path, content] of Object.entries(files)) {
         let sha: string | undefined;
-        if (isEditing) {
-          try {
-            const existing = await fetch(
-              `https://api.github.com/repos/${forkOwner}/${REPO_NAME}/contents/${path}?ref=${branchName}`,
-              { headers }
-            );
-            if (existing.ok) {
-              const d = await existing.json();
-              sha = d.sha;
-            }
-          } catch {}
-        }
+        try {
+          const existing = await fetch(
+            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${branchName}`,
+            { headers }
+          );
+          if (existing.ok) {
+            const d = await existing.json();
+            sha = d.sha;
+          }
+        } catch {}
 
         const body: any = {
           message: `${isEditing ? "Update" : "Add"} plugin: ${data.name}`,
@@ -640,10 +648,14 @@ export default function PluginEditor() {
         };
         if (sha) body.sha = sha;
 
-        await fetch(
-          `https://api.github.com/repos/${forkOwner}/${REPO_NAME}/contents/${path}`,
+        const putRes = await fetch(
+          `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
           { method: "PUT", headers, body: JSON.stringify(body) }
         );
+        if (!putRes.ok) {
+          const err = await putRes.json();
+          throw new Error(err.message || `Failed to write ${path}`);
+        }
       }
 
       if (isEditing && editSlug) {
@@ -652,7 +664,7 @@ export default function PluginEditor() {
           const oldDir = `plugins/${editSlug}`;
           const deleteTree = async (dirPath: string) => {
             const listRes = await fetch(
-              `https://api.github.com/repos/${forkOwner}/${REPO_NAME}/contents/${dirPath}?ref=${branchName}`,
+              `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${dirPath}?ref=${branchName}`,
               { headers }
             );
             if (!listRes.ok) return;
@@ -662,7 +674,7 @@ export default function PluginEditor() {
                 await deleteTree(item.path);
               } else {
                 await fetch(
-                  `https://api.github.com/repos/${forkOwner}/${REPO_NAME}/contents/${item.path}`,
+                  `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${item.path}`,
                   {
                     method: "DELETE",
                     headers,
@@ -687,8 +699,8 @@ export default function PluginEditor() {
           : `Update plugin: ${data.name} (v${data.version})`
         : `Add plugin: ${data.name}`;
       const prBody = isEditing
-        ? `## Plugin Update\n\n**Name:** ${data.name}\n**Version:** ${data.version}\n**Category:** ${effectiveCategory}${categoryChanged ? `\n**Moved from:** ${editSlug!.split("/")[0]}` : ""}\n\n---\n\n*Submitted via the Vicert Marketplace web editor.*`
-        : `## New Plugin Submission\n\n**Name:** ${data.name}\n**Category:** ${effectiveCategory}\n**Description:** ${data.description}\n\n---\n\n*Submitted via the Vicert Marketplace web editor.*`;
+        ? `## Plugin Update\n\n**Name:** ${data.name}\n**Version:** ${data.version}\n**Category:** ${effectiveCategory}${categoryChanged ? `\n**Moved from:** ${editSlug!.split("/")[0]}` : ""}\n\n---\n\n*Submitted via the Vicert Marketplace web editor by @${user.login}.*`
+        : `## New Plugin Submission\n\n**Name:** ${data.name}\n**Category:** ${effectiveCategory}\n**Description:** ${data.description}\n\n---\n\n*Submitted via the Vicert Marketplace web editor by @${user.login}.*`;
 
       const prRes = await fetch(
         `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/pulls`,
@@ -698,7 +710,7 @@ export default function PluginEditor() {
           body: JSON.stringify({
             title: prTitle,
             body: prBody,
-            head: `${forkOwner}:${branchName}`,
+            head: branchName,
             base: "main",
           }),
         }
