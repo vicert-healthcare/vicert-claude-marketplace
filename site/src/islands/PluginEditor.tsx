@@ -5,6 +5,7 @@ import type { PluginMeta } from "../lib/github-catalog";
 const REPO_OWNER = OWNER;
 const REPO_NAME = REPO;
 const CLIENT_ID = "Ov23li7vmJRWJ58UhThw";
+const OAUTH_PROXY_URL = "https://vicert-oauth-proxy.vicert-claude-marketplace.workers.dev"; // Set after deploying oauth-proxy (e.g. "https://vicert-oauth-proxy.workers.dev")
 
 interface FileEntry {
   id: string;
@@ -223,6 +224,15 @@ function FolderUploader({ onFilesLoaded }: { onFilesLoaded: (files: Record<strin
 }
 
 export default function PluginEditor() {
+  const oauthReturnRef = useRef<boolean | undefined>(undefined);
+  if (oauthReturnRef.current === undefined) {
+    oauthReturnRef.current =
+      typeof window !== "undefined" &&
+      new URLSearchParams(window.location.search).has("code") &&
+      !!sessionStorage.getItem("plugin_editor_data");
+  }
+  const isOAuthReturn = oauthReturnRef.current;
+
   const [categories, setCategories] = useState<string[]>([]);
   const [plugins, setPlugins] = useState<PluginMeta[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
@@ -241,23 +251,36 @@ export default function PluginEditor() {
   const [prUrl, setPrUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [loading, setLoading] = useState(!!editSlug);
+  const [loading, setLoading] = useState(!isOAuthReturn && !!editSlug);
   const isEditing = !!editSlug;
 
-  const [data, setData] = useState<PluginData>({
-    name: "",
-    version: "1.0.0",
-    description: "",
-    category: "",
-    newCategory: "",
-    authorName: "",
-    keywords: "",
-    license: "MIT",
-    skills: [],
-    agents: [],
-    commands: [],
-    extraFiles: [],
-    readme: "",
+  const [data, setData] = useState<PluginData>(() => {
+    const defaults: PluginData = {
+      name: "",
+      version: "1.0.0",
+      description: "",
+      category: "",
+      newCategory: "",
+      authorName: "",
+      keywords: "",
+      license: "MIT",
+      skills: [],
+      agents: [],
+      commands: [],
+      extraFiles: [],
+      readme: "",
+    };
+
+    if (isOAuthReturn) {
+      const saved = sessionStorage.getItem("plugin_editor_data");
+      if (saved) {
+        try {
+          return { ...defaults, ...JSON.parse(saved) };
+        } catch {}
+      }
+    }
+
+    return defaults;
   });
 
   useEffect(() => {
@@ -281,7 +304,46 @@ export default function PluginEditor() {
   );
 
   useEffect(() => {
-    if (!editSlug || catalogLoading) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const state = params.get("state");
+    if (!code || !state) return;
+
+    const savedState = sessionStorage.getItem("oauth_state");
+    sessionStorage.removeItem("oauth_state");
+    sessionStorage.removeItem("plugin_editor_data");
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete("code");
+    cleanUrl.searchParams.delete("state");
+    window.history.replaceState({}, "", cleanUrl.toString());
+
+    if (state !== savedState) {
+      setError("OAuth state mismatch. Please try signing in again.");
+      return;
+    }
+
+    (async () => {
+      try {
+        const res = await fetch(`${OAUTH_PROXY_URL}/api/auth/token`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code }),
+        });
+        if (!res.ok) throw new Error("Token exchange failed");
+        const result = await res.json();
+        if (result.error) throw new Error(result.error);
+        localStorage.setItem("gh_token", result.access_token);
+        setToken(result.access_token);
+      } catch (err: any) {
+        setError(err.message || "Authentication failed");
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (!editSlug || catalogLoading || isOAuthReturn) return;
 
     const catalogEntry = plugins.find((p) => p.slug === editSlug);
     if (catalogEntry) {
@@ -484,57 +546,33 @@ export default function PluginEditor() {
     return files;
   }, [data, effectiveCategory]);
 
-  const handleDeviceFlow = useCallback(async () => {
-    if (!CLIENT_ID) {
+  const handleOAuthLogin = useCallback(() => {
+    if (!CLIENT_ID || !OAUTH_PROXY_URL) {
       setError(
-        "GitHub OAuth App not configured. Please set the CLIENT_ID in the editor component, or contribute via GitHub directly."
+        "GitHub OAuth is not configured. Please deploy the OAuth proxy and set OAUTH_PROXY_URL, or contribute via GitHub directly."
       );
       return;
     }
 
-    try {
-      setError(null);
-      const codeRes = await fetch("https://github.com/login/device/code", {
-        method: "POST",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ client_id: CLIENT_ID, scope: "public_repo" }),
-      });
-      const codeData = await codeRes.json();
-      const { device_code, user_code, verification_uri, interval } = codeData;
+    sessionStorage.setItem("plugin_editor_data", JSON.stringify(data));
 
-      window.open(verification_uri, "_blank");
-      alert(`Enter this code on GitHub: ${user_code}\n\nA new tab has been opened.`);
+    const state = crypto.randomUUID();
+    sessionStorage.setItem("oauth_state", state);
 
-      const pollForToken = async (): Promise<string> => {
-        while (true) {
-          await new Promise((r) => setTimeout(r, (interval || 5) * 1000));
-          const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
-            method: "POST",
-            headers: { Accept: "application/json", "Content-Type": "application/json" },
-            body: JSON.stringify({
-              client_id: CLIENT_ID,
-              device_code,
-              grant_type: "urn:ietf:params:oauth:grant-type:device_code",
-            }),
-          });
-          const tokenData = await tokenRes.json();
-          if (tokenData.access_token) return tokenData.access_token;
-          if (tokenData.error === "authorization_pending") continue;
-          if (tokenData.error === "slow_down") {
-            await new Promise((r) => setTimeout(r, 5000));
-            continue;
-          }
-          throw new Error(tokenData.error_description || tokenData.error);
-        }
-      };
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete("code");
+    currentUrl.searchParams.delete("state");
+    const redirectUri = currentUrl.toString();
 
-      const accessToken = await pollForToken();
-      localStorage.setItem("gh_token", accessToken);
-      setToken(accessToken);
-    } catch (err: any) {
-      setError(err.message || "Authentication failed");
-    }
-  }, []);
+    const params = new URLSearchParams({
+      client_id: CLIENT_ID,
+      redirect_uri: redirectUri,
+      scope: "public_repo",
+      state,
+    });
+
+    window.location.href = `https://github.com/login/oauth/authorize?${params}`;
+  }, [data]);
 
   const handleSubmit = useCallback(async () => {
     if (!token) return;
@@ -899,7 +937,7 @@ export default function PluginEditor() {
                     : "Sign in with GitHub to submit your plugin as a pull request."}
                 </p>
                 <div class="flex flex-wrap gap-3">
-                  <button onClick={handleDeviceFlow} class={btnCls("brand")}>
+                  <button onClick={handleOAuthLogin} class={btnCls("brand")}>
                     Sign in with GitHub
                   </button>
                   <span class="text-gray-500 text-sm self-center">or</span>
