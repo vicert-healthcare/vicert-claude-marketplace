@@ -4,7 +4,7 @@ import type { PluginMeta } from "../lib/github-catalog";
 
 const REPO_OWNER = "vicert-healthcare";
 const REPO_NAME = "vicert-claude-marketplace";
-const CLIENT_ID = "";
+const CLIENT_ID = "Ov23li7vmJRWJ58UhThw";
 
 interface FileEntry {
   id: string;
