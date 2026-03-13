@@ -29,6 +29,7 @@ function timeAgo(dateStr: string): string {
 
 function statusBadge(pr: PR) {
   if (pr.merged_at) return { text: "Merged", cls: "bg-purple-900/50 text-purple-300" };
+  if (pr.state === "closed") return { text: "Closed", cls: "bg-red-900/50 text-red-300" };
   if (pr.draft) return { text: "Draft", cls: "bg-gray-700 text-gray-300" };
   return { text: "Open", cls: "bg-green-900/50 text-green-300" };
 }
