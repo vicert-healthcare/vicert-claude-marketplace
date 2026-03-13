@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from "preact/hooks";
+import { OWNER, REPO } from "../lib/github-catalog";
 
-const REPO_OWNER = "VicertDev";
-const REPO_NAME = "vicert-claude-marketplace";
+const REPO_OWNER = OWNER;
+const REPO_NAME = REPO;
 const CLIENT_ID = ""; // Set your GitHub OAuth App client ID here
 
 interface Props {

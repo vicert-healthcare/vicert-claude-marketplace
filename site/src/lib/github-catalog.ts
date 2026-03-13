@@ -1,5 +1,5 @@
-const OWNER = "vicert-healthcare";
-const REPO = "vicert-claude-marketplace";
+export const OWNER = "vicert-healthcare";
+export const REPO = "vicert-claude-marketplace";
 const BRANCH = "main";
 const RAW_BASE = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 
