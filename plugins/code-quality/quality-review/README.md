@@ -21,6 +21,8 @@ Each finding includes a specific location, problem description, and a concrete f
 
 ## Install
 
+## Test
+
 ```bash
 /plugin install quality-review@vicert-marketplace
 ```
