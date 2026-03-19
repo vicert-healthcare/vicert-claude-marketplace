@@ -1,0 +1,13 @@
+{
+  "name": "afas",
+  "version": "1.0.0",
+  "description": "Test",
+  "author": {
+    "name": "dejanradmanovic"
+  },
+  "keywords": [
+    "git",
+    "workflow"
+  ],
+  "license": "MIT"
+}
