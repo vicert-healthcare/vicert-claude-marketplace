@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import OfficialPlugins from "../islands/OfficialPlugins";
+---
+
+<Base title="Official Claude Code Plugins — Vicert Marketplace" description="Browse official Claude Code plugins from the Anthropic repository — commands, agents, skills, and hooks">
+  <section class="border-b-2 border-swiss-black">
+    <div class="p-6 lg:p-8 py-8 sm:py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Official Plugins</h1>
+          <span class="swiss-badge-black">Anthropic</span>
+        </div>
+        <p class="text-sm text-gray-600 max-w-lg leading-relaxed">
+          Official Claude Code plugins maintained by Anthropic. Browse commands, agents, skills, and hooks — click any plugin to see its README and install command.
+        </p>
+      </div>
+      <a
+        href="https://github.com/anthropics/claude-code/tree/main/plugins"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs font-bold text-vicert-blue hover:text-vicert-blue-dark transition-colors whitespace-nowrap"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </section>
+
+  <section class="p-6 lg:p-8">
+    <OfficialPlugins client:load />
+  </section>
+</Base>
