@@ -9,6 +9,31 @@
   },
   "plugins": [
     {
+      "name": "vicert-style",
+      "source": "./plugins/branding/vicert-style",
+      "description": "Format local documents (Word, PDF, presentations) to comply with Vicert's official brand guidelines from Vicert_Template.dotx",
+      "version": "1.0.0",
+      "category": "branding",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "Vicert Team",
+        "email": "team@vicert.com"
+      },
+      "tags": [
+        "brand",
+        "style",
+        "formatting",
+        "typography",
+        "colors",
+        "documents",
+        "word",
+        "pdf",
+        "presentations"
+      ]
+    },
+    {
       "name": "quality-review",
       "source": "./plugins/code-quality/quality-review",
       "description": "Adds a /quality-review skill for thorough code reviews covering bugs, security, and performance",
@@ -26,6 +51,56 @@
         "performance",
         "bugs"
       ],
+      "license": "MIT"
+    },
+    {
+      "name": "dotnet",
+      "source": "./plugins/development/dotnet",
+      "description": "C#/.NET development commands for Clean Architecture with MediatR, FluentValidation, and EF Core scaffolding",
+      "version": "1.0.0",
+      "category": "development",
+      "components": [
+        "commands"
+      ],
+      "author": {
+        "name": "claude-workflow contributors"
+      },
+      "tags": [
+        "dotnet",
+        "csharp",
+        "clean-architecture",
+        "mediatr",
+        "cqrs",
+        "ef-core",
+        "minimal-api",
+        "scaffolding"
+      ],
+      "repository": "https://github.com/mihailotrisovic1/claude-workflow",
+      "license": "MIT"
+    },
+    {
+      "name": "vicert-hr",
+      "source": "./plugins/development/vicert-hr",
+      "description": "VicertHR Lite Platform development commands - .NET 9 + React 19 HR management application with Clean Architecture patterns",
+      "version": "1.0.0",
+      "category": "development",
+      "components": [
+        "commands"
+      ],
+      "author": {
+        "name": "Vicert Healthcare"
+      },
+      "tags": [
+        "vicert",
+        "hr",
+        "dotnet",
+        "react",
+        "clean-architecture",
+        "ef-core",
+        "typescript",
+        "tailwind"
+      ],
+      "repository": "https://github.com/your-org/vicert-hr-plugin",
       "license": "MIT"
     },
     {
@@ -50,6 +125,29 @@
       "license": "MIT"
     },
     {
+      "name": "vicert-kb",
+      "source": "./plugins/knowledge/vicert-kb",
+      "description": "Vicert's knowledge base of success stories, case studies, capabilities, and client outcomes for healthcare software",
+      "version": "1.0.0",
+      "category": "knowledge",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "Vicert Team",
+        "email": "team@vicert.com"
+      },
+      "tags": [
+        "knowledge-base",
+        "success-stories",
+        "case-studies",
+        "healthcare",
+        "sales",
+        "marketing",
+        "proposals"
+      ]
+    },
+    {
       "name": "commit-helper",
       "source": "./plugins/productivity/commit-helper",
       "description": "Git commit workflow commands for conventional commits, interactive staging, and PR descriptions",
@@ -70,6 +168,27 @@
       "license": "MIT"
     },
     {
+      "name": "ptl-self-assess",
+      "source": "./plugins/productivity/ptl-self-assess",
+      "description": "Help Partner Team Leads complete quarterly self-assessments with guided questions and draft comments",
+      "version": "1.0.1",
+      "category": "productivity",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "Vicert Team",
+        "email": "team@vicert.com"
+      },
+      "tags": [
+        "assessment",
+        "self-review",
+        "ptl",
+        "quarterly",
+        "performance"
+      ]
+    },
+    {
       "name": "smart-context",
       "source": "./plugins/productivity/smart-context",
       "description": "An agent that automatically gathers relevant project context before answering questions",
@@ -88,6 +207,71 @@
         "codebase"
       ],
       "license": "MIT"
+    },
+    {
+      "name": "workflow",
+      "source": "./plugins/productivity/workflow",
+      "description": "Structured development workflow enforcing PRD → Plan → Architecture → Implementation phases with documentation gates",
+      "version": "1.0.0",
+      "category": "productivity",
+      "components": [
+        "commands"
+      ],
+      "author": {
+        "name": "claude-workflow contributors"
+      },
+      "tags": [
+        "workflow",
+        "prd",
+        "planning",
+        "architecture",
+        "structured-development",
+        "documentation",
+        "feature-gating"
+      ],
+      "repository": "https://github.com/mihailotrisovic1/claude-workflow",
+      "license": "MIT"
+    },
+    {
+      "name": "vicert-sales",
+      "source": "./plugins/sales/vicert-sales",
+      "description": "Vicert's complete sales toolkit — generate proposals, discovery call prep, outbound messages, competitive briefs, and ROI analyses grounded in Vicert's actual services, pricing, proof points, and competitive positioning",
+      "version": "1.4.0",
+      "category": "sales",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "Vicert Team",
+        "email": "team@vicert.com"
+      },
+      "tags": [
+        "sales",
+        "proposals",
+        "pitch",
+        "one-pager",
+        "email",
+        "discovery",
+        "call-prep",
+        "questions",
+        "objections",
+        "outbound",
+        "linkedin",
+        "outreach",
+        "prospecting",
+        "competitive",
+        "positioning",
+        "battlecard",
+        "differentiation",
+        "roi",
+        "financial-analysis",
+        "business-case",
+        "pricing",
+        "healthcare",
+        "documents"
+      ],
+      "homepage": "https://docs.google.com/document/d/16F_F1L7Vw0DrlEWYW34ed2vPCN52ZXFyDkuIrXTiey4/edit?usp=sharing",
+      "repository": "https://github.com/vicert-healthcare/vicert-internal-cc-plugins"
     }
   ]
 }

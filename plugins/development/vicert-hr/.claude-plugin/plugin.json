@@ -1,0 +1,20 @@
+{
+  "name": "vicert-hr",
+  "version": "1.0.0",
+  "description": "VicertHR Lite Platform development commands - .NET 9 + React 19 HR management application with Clean Architecture patterns",
+  "author": {
+    "name": "Vicert Healthcare"
+  },
+  "repository": "https://github.com/your-org/vicert-hr-plugin",
+  "license": "MIT",
+  "keywords": [
+    "vicert",
+    "hr",
+    "dotnet",
+    "react",
+    "clean-architecture",
+    "ef-core",
+    "typescript",
+    "tailwind"
+  ]
+}

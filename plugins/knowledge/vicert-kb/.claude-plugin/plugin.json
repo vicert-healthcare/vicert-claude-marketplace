@@ -1,0 +1,10 @@
+{
+  "name": "vicert-kb",
+  "description": "Vicert's knowledge base of success stories, case studies, capabilities, and client outcomes for healthcare software",
+  "version": "1.0.0",
+  "author": {
+    "name": "Vicert Team",
+    "email": "team@vicert.com"
+  },
+  "keywords": ["knowledge-base", "success-stories", "case-studies", "healthcare", "sales", "marketing", "proposals"]
+}

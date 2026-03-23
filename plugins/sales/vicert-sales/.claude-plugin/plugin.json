@@ -1,0 +1,36 @@
+{
+  "name": "vicert-sales",
+  "description": "Vicert's complete sales toolkit — generate proposals, discovery call prep, outbound messages, competitive briefs, and ROI analyses grounded in Vicert's actual services, pricing, proof points, and competitive positioning",
+  "version": "1.4.0",
+  "author": {
+    "name": "Vicert Team",
+    "email": "team@vicert.com"
+  },
+  "homepage": "https://docs.google.com/document/d/16F_F1L7Vw0DrlEWYW34ed2vPCN52ZXFyDkuIrXTiey4/edit?usp=sharing",
+  "repository": "https://github.com/vicert-healthcare/vicert-internal-cc-plugins",
+  "keywords": [
+    "sales",
+    "proposals",
+    "pitch",
+    "one-pager",
+    "email",
+    "discovery",
+    "call-prep",
+    "questions",
+    "objections",
+    "outbound",
+    "linkedin",
+    "outreach",
+    "prospecting",
+    "competitive",
+    "positioning",
+    "battlecard",
+    "differentiation",
+    "roi",
+    "financial-analysis",
+    "business-case",
+    "pricing",
+    "healthcare",
+    "documents"
+  ]
+}

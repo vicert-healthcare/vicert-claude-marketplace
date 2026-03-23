@@ -1,0 +1,19 @@
+{
+  "name": "workflow",
+  "version": "1.0.0",
+  "description": "Structured development workflow enforcing PRD → Plan → Architecture → Implementation phases with documentation gates",
+  "author": {
+    "name": "claude-workflow contributors"
+  },
+  "repository": "https://github.com/mihailotrisovic1/claude-workflow",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "prd",
+    "planning",
+    "architecture",
+    "structured-development",
+    "documentation",
+    "feature-gating"
+  ]
+}
