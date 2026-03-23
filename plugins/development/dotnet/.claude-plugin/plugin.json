@@ -1,0 +1,20 @@
+{
+  "name": "dotnet",
+  "version": "1.0.0",
+  "description": "C#/.NET development commands for Clean Architecture with MediatR, FluentValidation, and EF Core scaffolding",
+  "author": {
+    "name": "claude-workflow contributors"
+  },
+  "repository": "https://github.com/mihailotrisovic1/claude-workflow",
+  "license": "MIT",
+  "keywords": [
+    "dotnet",
+    "csharp",
+    "clean-architecture",
+    "mediatr",
+    "cqrs",
+    "ef-core",
+    "minimal-api",
+    "scaffolding"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "ptl-self-assess",
+  "description": "Help Partner Team Leads complete quarterly self-assessments with guided questions and draft comments",
+  "version": "1.0.1",
+  "author": {
+    "name": "Vicert Team",
+    "email": "team@vicert.com"
+  },
+  "keywords": ["assessment", "self-review", "ptl", "quarterly", "performance"]
+}

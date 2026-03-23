@@ -1,0 +1,10 @@
+{
+  "name": "vicert-style",
+  "description": "Format local documents (Word, PDF, presentations) to comply with Vicert's official brand guidelines from Vicert_Template.dotx",
+  "version": "1.0.0",
+  "author": {
+    "name": "Vicert Team",
+    "email": "team@vicert.com"
+  },
+  "keywords": ["brand", "style", "formatting", "typography", "colors", "documents", "word", "pdf", "presentations"]
+}
