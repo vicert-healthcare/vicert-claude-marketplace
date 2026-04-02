@@ -28,10 +28,10 @@ function timeAgo(dateStr: string): string {
 }
 
 function statusBadge(pr: PR) {
-  if (pr.merged_at) return { text: "Merged", cls: "bg-purple-900/50 text-purple-300" };
-  if (pr.state === "closed") return { text: "Closed", cls: "bg-red-900/50 text-red-300" };
-  if (pr.draft) return { text: "Draft", cls: "bg-gray-700 text-gray-300" };
-  return { text: "Open", cls: "bg-green-900/50 text-green-300" };
+  if (pr.merged_at) return { text: "Merged", cls: "bg-purple-100 text-purple-800" };
+  if (pr.state === "closed") return { text: "Closed", cls: "bg-red-100 text-red-800" };
+  if (pr.draft) return { text: "Draft", cls: "bg-gray-200 text-gray-800" };
+  return { text: "Open", cls: "bg-green-100 text-green-800" };
 }
 
 export default function PendingReviews() {
@@ -66,15 +66,15 @@ export default function PendingReviews() {
 
   if (loading) {
     return (
-      <div class="text-center py-12">
-        <p class="text-gray-500">Loading pull requests...</p>
+      <div class="text-center py-16">
+        <p class="text-gray-600 font-medium">Loading pull requests...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div class="bg-red-900/30 border border-red-800 text-red-300 rounded-lg p-4 text-sm">
+      <div class="border-2 border-vicert-blue-dark bg-red-50 text-vicert-blue-dark p-4 text-sm font-medium">
         Failed to load pull requests: {error}
       </div>
     );
@@ -82,7 +82,8 @@ export default function PendingReviews() {
 
   return (
     <div>
-      <div class="flex gap-2 mb-6">
+      {/* Filter tabs */}
+      <div class="flex gap-2 mb-8">
         {(["open", "closed", "all"] as const).map((f) => (
           <button
             key={f}
@@ -90,10 +91,10 @@ export default function PendingReviews() {
               setLoading(true);
               setFilter(f);
             }}
-            class={`text-sm px-4 py-2 rounded-lg transition-colors capitalize ${
+            class={`text-sm font-bold py-2 px-5 transition-all duration-200 capitalize ${
               filter === f
-                ? "bg-brand-600 text-white"
-                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                ? "bg-swiss-black text-swiss-white"
+                : "bg-swiss-white text-swiss-black border-2 border-swiss-black hover:bg-gray-100"
             }`}
           >
             {f}
@@ -102,11 +103,11 @@ export default function PendingReviews() {
       </div>
 
       {prs.length === 0 ? (
-        <div class="text-center py-12">
-          <p class="text-gray-500">No {filter === "all" ? "" : filter} plugin pull requests found.</p>
+        <div class="text-center py-16">
+          <p class="text-gray-600 font-medium">No {filter === "all" ? "" : filter} plugin pull requests found.</p>
         </div>
       ) : (
-        <div class="space-y-3">
+        <div class="space-y-4">
           {prs.map((pr) => {
             const badge = statusBadge(pr);
             return (
@@ -115,23 +116,25 @@ export default function PendingReviews() {
                 href={pr.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block bg-gray-900 border border-gray-800 rounded-xl p-5 hover:border-gray-700 transition-colors"
+                class="block bg-swiss-white border-2 border-swiss-black p-5 cursor-pointer transition-shadow duration-200 hover:shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]"
               >
                 <div class="flex items-start justify-between gap-4">
                   <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class={`text-xs px-2 py-0.5 rounded ${badge.cls}`}>{badge.text}</span>
-                      <span class="text-xs text-gray-500">#{pr.number}</span>
+                    <div class="flex items-center gap-3 mb-2">
+                      <span class={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 ${badge.cls}`}>
+                        {badge.text}
+                      </span>
+                      <span class="text-xs text-gray-600 font-mono">#{pr.number}</span>
                     </div>
-                    <h3 class="text-white font-medium truncate">{pr.title}</h3>
-                    <div class="flex items-center gap-3 mt-2 text-xs text-gray-500">
-                      <span class="flex items-center gap-1">
+                    <h3 class="text-swiss-black font-bold text-sm">{pr.title}</h3>
+                    <div class="flex items-center gap-4 mt-2 text-xs text-gray-600">
+                      <span class="flex items-center gap-1.5">
                         <img
                           src={pr.user.avatar_url}
                           alt=""
-                          class="w-4 h-4 rounded-full"
+                          class="w-4 h-4 rounded-full border border-gray-200"
                         />
-                        {pr.user.login}
+                        <span class="font-medium">{pr.user.login}</span>
                       </span>
                       <span>opened {timeAgo(pr.created_at)}</span>
                       <span>updated {timeAgo(pr.updated_at)}</span>
@@ -139,11 +142,11 @@ export default function PendingReviews() {
                   </div>
 
                   {pr.labels.length > 0 && (
-                    <div class="flex gap-1.5 flex-shrink-0">
+                    <div class="flex gap-2 flex-shrink-0">
                       {pr.labels.map((label) => (
                         <span
                           key={label.name}
-                          class="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded"
+                          class="text-[10px] font-bold uppercase tracking-wider bg-gray-200 text-gray-800 px-2 py-0.5"
                         >
                           {label.name}
                         </span>

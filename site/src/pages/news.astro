@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import ClaudeCodeNews from "../islands/ClaudeCodeNews";
+---
+
+<Base title="Claude Code Changelog — Vicert Marketplace" description="Full Claude Code changelog — search every version and feature">
+  <section class="border-b-2 border-swiss-black">
+    <div class="p-6 lg:p-8 py-8 sm:py-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Changelog</h1>
+          <span class="swiss-badge-black">Feed</span>
+        </div>
+        <p class="text-sm text-gray-600 max-w-lg leading-relaxed">
+          Complete Claude Code changelog. Search for any feature, command, or fix across all versions.
+        </p>
+      </div>
+      <a
+        href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-xs font-bold text-vicert-blue hover:text-vicert-blue-dark transition-colors whitespace-nowrap"
+      >
+        View on GitHub
+      </a>
+    </div>
+  </section>
+
+  <section class="p-6 lg:p-8 max-w-4xl">
+    <ClaudeCodeNews client:load />
+  </section>
+</Base>

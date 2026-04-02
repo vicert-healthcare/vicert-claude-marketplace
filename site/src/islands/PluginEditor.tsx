@@ -5,7 +5,7 @@ import type { PluginMeta } from "../lib/github-catalog";
 const REPO_OWNER = OWNER;
 const REPO_NAME = REPO;
 const CLIENT_ID = "Ov23li7vmJRWJ58UhThw";
-const OAUTH_PROXY_URL = "https://vicert-oauth-proxy.vicert-claude-marketplace.workers.dev"; // Set after deploying oauth-proxy (e.g. "https://vicert-oauth-proxy.workers.dev")
+const OAUTH_PROXY_URL = "https://vicert-oauth-proxy.vicert-claude-marketplace.workers.dev";
 
 interface FileEntry {
   id: string;
@@ -62,22 +62,21 @@ disable-model-invocation: true
 Your command instructions here.
 `;
 
-function inputCls() {
-  return "w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-500 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none";
-}
-
-function textareaCls() {
-  return `${inputCls()} font-mono text-sm placeholder-gray-600`;
-}
-
-function btnCls(variant: "brand" | "green" | "gray" | "red" = "brand") {
-  const colors: Record<string, string> = {
-    brand: "bg-brand-600 hover:bg-brand-700 text-white",
-    green: "bg-green-600 hover:bg-green-700 text-white",
-    gray: "bg-gray-700 hover:bg-gray-600 text-gray-200",
-    red: "bg-red-900/50 hover:bg-red-900 text-red-300",
-  };
-  return `${colors[variant]} px-4 py-2 rounded-lg transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed`;
+function FormField({ label, hint, required, children }: {
+  label: string;
+  hint?: string;
+  required?: boolean;
+  children: any;
+}) {
+  return (
+    <div>
+      <label class="swiss-label">
+        {label}{required && <span class="text-vicert-blue ml-1">*</span>}
+      </label>
+      {children}
+      {hint && <p class="text-xs text-gray-300 mt-1.5">{hint}</p>}
+    </div>
+  );
 }
 
 function FileListEditor({
@@ -87,6 +86,7 @@ function FileListEditor({
   onChange,
   placeholder,
   nameHelp,
+  description,
 }: {
   label: string;
   icon: string;
@@ -94,6 +94,7 @@ function FileListEditor({
   onChange: (files: FileEntry[]) => void;
   placeholder: string;
   nameHelp: string;
+  description: string;
 }) {
   const addFile = () => {
     onChange([...files, makeFile("", "")]);
@@ -108,54 +109,72 @@ function FileListEditor({
   };
 
   return (
-    <div class="space-y-3">
-      <div class="flex items-center justify-between">
-        <label class="text-sm text-gray-400">
-          {icon} {label}
-        </label>
-        <button type="button" onClick={addFile} class={btnCls("gray")}>
-          + Add {label.replace(/s$/, "")}
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-base">{icon}</span>
+          <span class="text-sm font-bold">{label}</span>
+          <span class="text-xs text-gray-300 font-medium">({files.length})</span>
+        </div>
+        <button
+          type="button"
+          onClick={addFile}
+          class="text-xs font-bold text-vicert-blue hover:text-vicert-blue-dark transition-colors flex items-center gap-1"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          Add
         </button>
       </div>
 
-      {files.length === 0 && (
-        <p class="text-xs text-gray-600 italic">No {label.toLowerCase()} added yet.</p>
-      )}
-
-      {files.map((file) => (
-        <div key={file.id} class="border border-gray-700 rounded-lg p-3 space-y-2">
-          <div class="flex items-center gap-2">
-            <input
-              type="text"
-              value={file.name}
-              onInput={(e: Event) =>
-                updateFile(file.id, "name", (e.target as HTMLInputElement).value)
-              }
-              placeholder={nameHelp}
-              class="flex-1 bg-gray-800 border border-gray-700 rounded px-3 py-1.5 text-white text-sm placeholder-gray-500 focus:border-brand-500 outline-none"
-            />
-            <button
-              type="button"
-              onClick={() => removeFile(file.id)}
-              class="text-gray-500 hover:text-red-400 transition-colors p-1"
-              title="Remove"
-            >
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          <textarea
-            value={file.content}
-            onInput={(e: Event) =>
-              updateFile(file.id, "content", (e.target as HTMLTextAreaElement).value)
-            }
-            placeholder={placeholder}
-            rows={6}
-            class={textareaCls()}
-          />
+      {files.length === 0 ? (
+        <button
+          type="button"
+          onClick={addFile}
+          class="w-full border-2 border-dashed border-gray-200 p-4 text-center hover:border-vicert-blue hover:bg-swiss-cream transition-all group"
+        >
+          <p class="text-sm text-gray-300 group-hover:text-vicert-blue transition-colors">{description}</p>
+        </button>
+      ) : (
+        <div class="space-y-3">
+          {files.map((file, index) => (
+            <div key={file.id} class="border-2 border-gray-200 bg-white">
+              <div class="flex items-center gap-2 px-3 py-2 bg-gray-100 border-b border-gray-200">
+                <span class="text-[10px] font-bold text-gray-300 uppercase tracking-wider w-5">{String(index + 1).padStart(2, "0")}</span>
+                <input
+                  type="text"
+                  value={file.name}
+                  onInput={(e: Event) =>
+                    updateFile(file.id, "name", (e.target as HTMLInputElement).value)
+                  }
+                  placeholder={nameHelp}
+                  class="flex-1 bg-transparent text-sm font-medium placeholder-gray-300 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeFile(file.id)}
+                  class="text-gray-300 hover:text-red-500 transition-colors p-0.5"
+                  title="Remove"
+                >
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <textarea
+                value={file.content}
+                onInput={(e: Event) =>
+                  updateFile(file.id, "content", (e.target as HTMLTextAreaElement).value)
+                }
+                placeholder={placeholder}
+                rows={6}
+                class="w-full py-3 px-4 text-sm font-mono placeholder-gray-300 focus:outline-none resize-y"
+              />
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }
@@ -190,8 +209,8 @@ function FolderUploader({ onFilesLoaded }: { onFilesLoaded: (files: Record<strin
 
   return (
     <div
-      class={`border-2 border-dashed rounded-xl p-6 text-center transition-colors cursor-pointer ${
-        dragOver ? "border-brand-500 bg-brand-500/5" : "border-gray-700 hover:border-gray-600"
+      class={`border-2 border-dashed p-8 text-center transition-all cursor-pointer ${
+        dragOver ? "border-vicert-blue bg-swiss-cream" : "border-gray-200 hover:border-swiss-black hover:bg-gray-100"
       }`}
       onDragOver={(e: DragEvent) => {
         e.preventDefault();
@@ -213,12 +232,27 @@ function FolderUploader({ onFilesLoaded }: { onFilesLoaded: (files: Record<strin
           if (input.files) processFileList(input.files);
         }}
       />
-      <div class="text-gray-500 text-sm">
-        <p class="mb-1">Drag & drop files or a folder here, or click to browse</p>
-        <p class="text-xs text-gray-600">
-          Upload an entire plugin folder to auto-detect skills, agents, commands, and other files
+      <div>
+        <svg class="w-8 h-8 mx-auto mb-3 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+        </svg>
+        <p class="text-sm font-bold text-swiss-black mb-1">Drop a plugin folder here</p>
+        <p class="text-xs text-gray-300">
+          or click to browse — auto-detects skills, agents, commands & plugin.json
         </p>
       </div>
+    </div>
+  );
+}
+
+function SectionHeader({ step, title, description }: { step: string; title: string; description?: string }) {
+  return (
+    <div class="mb-6">
+      <div class="flex items-center gap-3 mb-1">
+        <span class="text-xs font-bold text-vicert-blue uppercase tracking-widest">{step}</span>
+        <h2 class="text-lg font-black">{title}</h2>
+      </div>
+      {description && <p class="text-sm text-gray-600">{description}</p>}
     </div>
   );
 }
@@ -743,19 +777,23 @@ export default function PluginEditor() {
 
   if (prUrl) {
     return (
-      <div class="bg-gray-900 border border-green-800 rounded-xl p-8 text-center">
-        <div class="text-4xl mb-4">🎉</div>
-        <h2 class="text-2xl font-bold text-white mb-2">
-          Plugin {isEditing ? "Updated" : "Submitted"}!
+      <div class="border-2 border-swiss-black p-10 text-center">
+        <div class="w-12 h-12 bg-green-100 mx-auto mb-4 flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h2 class="text-2xl font-black mb-2">
+          Plugin {isEditing ? "Updated" : "Submitted"}
         </h2>
-        <p class="text-gray-400 mb-6">Your pull request has been created and is awaiting review.</p>
+        <p class="text-sm text-gray-600 mb-6">Your pull request has been created and is awaiting review.</p>
         <a
           href={prUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class={`inline-block ${btnCls("brand")} px-6 py-3`}
+          class="inline-block bg-swiss-black text-white font-bold text-sm py-3 px-8 hover:bg-gray-800 transition-colors"
         >
-          View Pull Request →
+          View Pull Request
         </a>
       </div>
     );
@@ -763,200 +801,237 @@ export default function PluginEditor() {
 
   if (loading || catalogLoading) {
     return (
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-8 text-center">
-        <p class="text-gray-400">Loading plugin data...</p>
+      <div class="border-2 border-gray-200 p-10 text-center">
+        <p class="text-sm text-gray-600 font-medium">Loading plugin data...</p>
       </div>
     );
   }
 
+  const completionSteps = [
+    { done: !!data.name.trim() && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(data.name), label: "Name" },
+    { done: !!data.description.trim(), label: "Description" },
+    { done: hasComponents, label: "Components" },
+  ];
+  const completedCount = completionSteps.filter((s) => s.done).length;
+
   return (
-    <div class="space-y-8">
+    <div class="space-y-6">
+      {/* Progress indicator */}
+      <div class="flex items-center gap-4">
+        {completionSteps.map((step, i) => (
+          <div key={i} class="flex items-center gap-2">
+            <div class={`w-5 h-5 flex items-center justify-center text-[10px] font-bold ${
+              step.done ? "bg-swiss-black text-white" : "border-2 border-gray-200 text-gray-300"
+            }`}>
+              {step.done ? (
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                i + 1
+              )}
+            </div>
+            <span class={`text-xs font-bold uppercase tracking-wider ${step.done ? "text-swiss-black" : "text-gray-300"}`}>
+              {step.label}
+            </span>
+            {i < completionSteps.length - 1 && <div class="w-8 h-px bg-gray-200 ml-2" />}
+          </div>
+        ))}
+      </div>
+
       {isEditing && (
-        <div class="bg-blue-900/20 border border-blue-800 text-blue-300 rounded-lg p-4 text-sm">
-          Editing <strong>{editSlug}</strong> — remember to bump the version before submitting.
+        <div class="flex items-center gap-3 bg-swiss-cream border-2 border-vicert-blue p-4">
+          <svg class="w-4 h-4 text-vicert-blue flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p class="text-sm font-medium">
+            Editing <strong>{editSlug}</strong> — remember to bump the version.
+          </p>
         </div>
       )}
 
       {error && (
-        <div class="bg-red-900/30 border border-red-800 text-red-300 rounded-lg p-4 text-sm">
-          {error}
+        <div class="flex items-center gap-3 bg-red-50 border-2 border-red-400 p-4">
+          <svg class="w-4 h-4 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p class="text-sm font-medium text-red-800">{error}</p>
         </div>
       )}
 
       {/* Upload */}
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-white mb-4">Upload Plugin Folder</h2>
-        <p class="text-sm text-gray-400 mb-4">
-          Upload an existing plugin folder to auto-populate all fields, or fill them in manually below.
-        </p>
-        <FolderUploader onFilesLoaded={handleFolderUpload} />
-      </div>
+      <FolderUploader onFilesLoaded={handleFolderUpload} />
 
       {/* Metadata */}
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-white mb-4">1. Plugin Metadata</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm text-gray-400 mb-1">Plugin Name *</label>
+      <div class="border-2 border-swiss-black bg-white p-6">
+        <SectionHeader step="01" title="Metadata" description="Basic information about your plugin." />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <FormField label="Plugin Name" required hint="lowercase, kebab-case (e.g. my-plugin)">
             <input
               type="text"
               value={data.name}
               onInput={update("name")}
               placeholder="my-awesome-plugin"
               disabled={isEditing}
-              class={inputCls()}
+              class="swiss-input"
             />
-            <p class="text-xs text-gray-500 mt-1">kebab-case only</p>
-          </div>
-          <div>
-            <label class="block text-sm text-gray-400 mb-1">Version *</label>
-            <input type="text" value={data.version} onInput={update("version")} class={inputCls()} />
-          </div>
+          </FormField>
+          <FormField label="Version" required>
+            <input type="text" value={data.version} onInput={update("version")} class="swiss-input" />
+          </FormField>
           <div class="md:col-span-2">
-            <label class="block text-sm text-gray-400 mb-1">Description *</label>
-            <input
-              type="text"
-              value={data.description}
-              onInput={update("description")}
-              placeholder="Brief description of what this plugin does"
-              class={inputCls()}
-            />
+            <FormField label="Description" required>
+              <input
+                type="text"
+                value={data.description}
+                onInput={update("description")}
+                placeholder="What does this plugin do?"
+                class="swiss-input"
+              />
+            </FormField>
           </div>
-          <div>
-            <label class="block text-sm text-gray-400 mb-1">Category *</label>
-            <select value={data.category} onChange={update("category")} class={inputCls()}>
+          <FormField label="Category" required>
+            <select value={data.category} onChange={update("category")} class="swiss-input">
               {categories.map((c) => (
                 <option value={c}>{c}</option>
               ))}
-              <option value="__new__">+ Create new category</option>
+              <option value="__new__">+ New category</option>
             </select>
-          </div>
+          </FormField>
           {data.category === "__new__" && (
-            <div>
-              <label class="block text-sm text-gray-400 mb-1">New Category Name *</label>
+            <FormField label="New Category" required>
               <input
                 type="text"
                 value={data.newCategory}
                 onInput={update("newCategory")}
                 placeholder="my-category"
-                class={inputCls()}
+                class="swiss-input"
               />
-            </div>
+            </FormField>
           )}
-          <div>
-            <label class="block text-sm text-gray-400 mb-1">Author</label>
+          <FormField label="Author">
             <input
               type="text"
               value={data.authorName}
               onInput={update("authorName")}
               placeholder="Your name or GitHub username"
-              class={inputCls()}
+              class="swiss-input"
             />
-          </div>
-          <div>
-            <label class="block text-sm text-gray-400 mb-1">Keywords (comma-separated)</label>
+          </FormField>
+          <FormField label="Keywords" hint="Comma separated">
             <input
               type="text"
               value={data.keywords}
               onInput={update("keywords")}
               placeholder="git, workflow, productivity"
-              class={inputCls()}
+              class="swiss-input"
             />
-          </div>
-          <div>
-            <label class="block text-sm text-gray-400 mb-1">License</label>
-            <input type="text" value={data.license} onInput={update("license")} class={inputCls()} />
-          </div>
+          </FormField>
+          <FormField label="License">
+            <input type="text" value={data.license} onInput={update("license")} class="swiss-input" />
+          </FormField>
         </div>
       </div>
 
       {/* Components */}
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 space-y-6">
-        <h2 class="text-lg font-semibold text-white">2. Components</h2>
-        <p class="text-sm text-gray-400">
-          Add skills, agents, and commands. Each type supports multiple files.
-        </p>
+      <div class="border-2 border-swiss-black bg-white p-6 space-y-6">
+        <SectionHeader step="02" title="Components" description="Add skills, agents, commands, or other files." />
 
         <FileListEditor
           label="Skills"
-          icon="⚡"
+          icon="S"
           files={data.skills}
           onChange={(skills) => setData((prev) => ({ ...prev, skills }))}
           placeholder={SKILL_TEMPLATE}
-          nameHelp="skill-name (becomes skills/<name>/SKILL.md)"
+          nameHelp="skill-name"
+          description="Click to add a skill (skills/<name>/SKILL.md)"
         />
+
+        <div class="border-t border-gray-200" />
 
         <FileListEditor
           label="Agents"
-          icon="🤖"
+          icon="A"
           files={data.agents}
           onChange={(agents) => setData((prev) => ({ ...prev, agents }))}
           placeholder={AGENT_TEMPLATE}
-          nameHelp="agent-name (becomes agents/<name>.md)"
+          nameHelp="agent-name"
+          description="Click to add an agent (agents/<name>.md)"
         />
+
+        <div class="border-t border-gray-200" />
 
         <FileListEditor
           label="Commands"
-          icon="⌨️"
+          icon="C"
           files={data.commands}
           onChange={(commands) => setData((prev) => ({ ...prev, commands }))}
           placeholder={COMMAND_TEMPLATE}
-          nameHelp="command-name (becomes commands/<name>.md)"
+          nameHelp="command-name"
+          description="Click to add a command (commands/<name>.md)"
         />
+
+        <div class="border-t border-gray-200" />
 
         <FileListEditor
           label="Other Files"
-          icon="📁"
+          icon="F"
           files={data.extraFiles}
           onChange={(extraFiles) => setData((prev) => ({ ...prev, extraFiles }))}
           placeholder="File content..."
-          nameHelp="relative path (e.g., .mcp.json, hooks/hooks.json, scripts/run.sh)"
+          nameHelp="relative/path.ext"
+          description="Click to add other files (.mcp.json, hooks, etc.)"
         />
       </div>
 
       {/* README */}
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-white mb-4">3. README</h2>
+      <div class="border-2 border-swiss-black bg-white p-6">
+        <SectionHeader step="03" title="README" description="Documentation shown on the plugin detail page. Markdown supported." />
         <textarea
           value={data.readme}
           onInput={update("readme")}
-          placeholder={`# ${data.name || "my-plugin"}\n\nDescribe your plugin here.\n\n## Usage\n\nExplain how to use it.\n\n## Install\n\n\`\`\`bash\n/plugin install ${data.name || "my-plugin"}@vicert-marketplace\n\`\`\``}
+          placeholder={`# ${data.name || "my-plugin"}\n\nDescribe your plugin here.\n\n## Usage\n\nExplain how to use it.`}
           rows={10}
-          class={textareaCls()}
+          class="swiss-input font-mono text-sm"
         />
       </div>
 
-      {/* Preview & Submit */}
-      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
-        <h2 class="text-lg font-semibold text-white mb-4">4. Preview & Submit</h2>
+      {/* Submit */}
+      <div class="border-2 border-swiss-black bg-white p-6">
+        <SectionHeader step="04" title="Submit" />
 
         {isMetadataValid && hasComponents ? (
           <div>
-            <h3 class="text-sm text-gray-400 mb-2">
-              {isEditing ? "Files that will be created or updated:" : "Files that will be created:"}
-            </h3>
-            <ul class="text-sm font-mono text-gray-300 space-y-1 mb-6 bg-gray-800 rounded-lg p-4 max-h-64 overflow-y-auto">
-              {Object.keys(buildFiles()).map((path) => (
-                <li key={path}>📄 {path}</li>
-              ))}
-            </ul>
+            <div class="mb-6">
+              <p class="swiss-label">Files to be created</p>
+              <div class="bg-swiss-black text-gray-300 p-4 font-mono text-xs max-h-48 overflow-y-auto space-y-0.5">
+                {Object.keys(buildFiles()).map((path) => (
+                  <div key={path} class="flex items-center gap-2">
+                    <span class="text-green-400">+</span>
+                    <span>{path}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {!token ? (
-              <div class="space-y-3">
-                <p class="text-sm text-gray-400">
-                  {isEditing
-                    ? "Authenticate with GitHub to submit your changes as a pull request."
-                    : "Sign in with GitHub to submit your plugin as a pull request."}
+              <div>
+                <p class="text-sm text-gray-600 mb-4">
+                  Authenticate with GitHub to submit your plugin as a pull request.
                 </p>
-                <div class="flex flex-wrap gap-3">
-                  <button onClick={handleOAuthLogin} class={btnCls("brand")}>
+                <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                  <button
+                    onClick={handleOAuthLogin}
+                    class="bg-swiss-black text-white font-bold text-sm py-3 px-6 hover:bg-gray-800 transition-colors flex items-center gap-2"
+                  >
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                     Sign in with GitHub
                   </button>
-                  <span class="text-gray-500 text-sm self-center">or</span>
+                  <span class="text-xs text-gray-300 font-bold uppercase tracking-wider">or</span>
                   <input
                     type="password"
-                    placeholder="Paste a GitHub personal access token"
-                    class={`${inputCls()} flex-1 min-w-[200px]`}
+                    placeholder="Paste a personal access token"
+                    class="swiss-input flex-1 min-w-0"
                     onInput={(e: Event) => {
                       const val = (e.target as HTMLInputElement).value;
                       if (val.length > 20) {
@@ -969,19 +1044,23 @@ export default function PluginEditor() {
               </div>
             ) : (
               <div class="flex items-center gap-4">
-                <button onClick={handleSubmit} disabled={submitting} class={btnCls("green")}>
+                <button
+                  onClick={handleSubmit}
+                  disabled={submitting}
+                  class="bg-vicert-blue text-white font-bold text-sm py-3 px-8 hover:bg-vicert-blue-dark transition-colors disabled:bg-gray-200 disabled:text-gray-600 disabled:cursor-not-allowed"
+                >
                   {submitting
                     ? "Submitting..."
                     : isEditing
-                      ? "Submit Update (Open PR)"
-                      : "Submit Plugin (Open PR)"}
+                      ? "Submit Update"
+                      : "Submit Plugin"}
                 </button>
                 <button
                   onClick={() => {
                     localStorage.removeItem("gh_token");
                     setToken(null);
                   }}
-                  class="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+                  class="text-xs text-gray-300 hover:text-swiss-black font-bold transition-colors"
                 >
                   Sign out
                 </button>
@@ -989,21 +1068,37 @@ export default function PluginEditor() {
             )}
           </div>
         ) : (
-          <div class="text-sm text-gray-500">
-            <p>Complete the required fields to preview:</p>
-            <ul class="mt-2 space-y-1">
-              {!data.name.trim() && <li>- Plugin name is required</li>}
-              {data.name.trim() && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(data.name) && (
-                <li>- Plugin name must be kebab-case</li>
-              )}
-              {!data.description.trim() && <li>- Description is required</li>}
-              {data.category === "__new__" && !data.newCategory.trim() && (
-                <li>- New category name is required</li>
-              )}
-              {!hasComponents && (
-                <li>- At least one component (skill, agent, command, or other file) is required</li>
-              )}
-            </ul>
+          <div class="space-y-2">
+            {!data.name.trim() && (
+              <p class="text-sm text-gray-600 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-gray-300 flex-shrink-0" />
+                Plugin name is required
+              </p>
+            )}
+            {data.name.trim() && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(data.name) && (
+              <p class="text-sm text-gray-600 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-gray-300 flex-shrink-0" />
+                Plugin name must be kebab-case
+              </p>
+            )}
+            {!data.description.trim() && (
+              <p class="text-sm text-gray-600 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-gray-300 flex-shrink-0" />
+                Description is required
+              </p>
+            )}
+            {data.category === "__new__" && !data.newCategory.trim() && (
+              <p class="text-sm text-gray-600 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-gray-300 flex-shrink-0" />
+                New category name is required
+              </p>
+            )}
+            {!hasComponents && (
+              <p class="text-sm text-gray-600 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-gray-300 flex-shrink-0" />
+                At least one component is required
+              </p>
+            )}
           </div>
         )}
       </div>

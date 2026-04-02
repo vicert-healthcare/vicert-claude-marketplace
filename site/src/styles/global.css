@@ -2,11 +2,337 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    color-scheme: light;
-  }
-  .dark {
-    color-scheme: dark;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --black: #1a1a1a;
+  --white: #fafafa;
+  --blue: #0099ff;
+  --blue-light: #33adff;
+  --blue-dark: #0077cc;
+  --cream: #f0f7ff;
+  --gray-100: #f5f5f5;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-600: #525252;
+  --gray-800: #262626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: var(--white);
+  color: var(--black);
+}
+
+/* Swiss Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--black);
+}
+
+h1 { font-size: 3rem; font-weight: 900; }
+h2 { font-size: 2rem; font-weight: 800; }
+h3 { font-size: 1.5rem; font-weight: 700; }
+
+/* Swiss Cards */
+.swiss-card {
+  @apply bg-swiss-white border-2 border-swiss-black p-6;
+}
+
+.swiss-card-hover {
+  @apply swiss-card cursor-pointer transition-shadow duration-200;
+}
+
+.swiss-card-hover:hover {
+  @apply shadow-[4px_4px_0px_0px_rgba(26,26,26,1)];
+}
+
+/* Swiss Input */
+input.swiss-input,
+select.swiss-input,
+textarea.swiss-input,
+.swiss-input {
+  width: 100%;
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: #1a1a1a !important;
+  padding: 0.75rem 1rem;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.swiss-input::placeholder {
+  color: #c0c0c0;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.swiss-input:focus {
+  outline: none;
+  border-color: #0099ff !important;
+  box-shadow: 0 0 0 2px rgba(0, 153, 255, 0.2);
+}
+
+.swiss-input:disabled {
+  background-color: #f5f5f5;
+  color: #525252;
+  border-color: #e5e5e5 !important;
+  cursor: not-allowed;
+}
+
+select.swiss-input {
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-size: 20px;
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+}
+
+textarea.swiss-input {
+  resize: vertical;
+  min-height: 2.5rem;
+}
+
+.swiss-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-600);
+}
+
+/* Swiss Badge */
+.swiss-badge {
+  @apply inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider;
+}
+
+.swiss-badge-black {
+  @apply swiss-badge bg-swiss-black text-swiss-white;
+}
+
+.swiss-badge-blue {
+  @apply swiss-badge bg-swiss-blue text-swiss-white;
+}
+
+.swiss-badge-cream {
+  @apply swiss-badge bg-swiss-cream text-swiss-black;
+}
+
+.swiss-badge-gray {
+  @apply swiss-badge bg-gray-200 text-gray-800;
+}
+
+/* Spacing */
+.section-spacing {
+  @apply py-12 md:py-16;
+}
+
+/* Clean Lines */
+.divider {
+  @apply border-t-2 border-swiss-black;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+}
+
+/* Markdown content */
+.markdown-content h1 { @apply text-3xl font-black mb-6 mt-8; }
+.markdown-content h2 { @apply text-2xl font-bold mb-4 mt-6; }
+.markdown-content h3 { @apply text-xl font-bold mb-3 mt-4; }
+.markdown-content p { @apply mb-4 leading-relaxed; }
+.markdown-content ul { @apply list-disc list-inside mb-4 space-y-2; }
+.markdown-content ol { @apply list-decimal list-inside mb-4 space-y-2; }
+.markdown-content code { @apply bg-gray-100 px-2 py-1 font-mono text-sm; }
+.markdown-content pre { @apply bg-swiss-black text-swiss-white p-4 mb-4 overflow-x-auto; }
+.markdown-content pre code { @apply bg-transparent px-0 py-0; }
+.markdown-content blockquote { @apply border-l-4 border-vicert-blue pl-4 italic my-4; }
+.markdown-content strong { @apply font-bold; }
+.markdown-content a { @apply text-vicert-blue hover:text-vicert-blue-dark underline; }
+
+/* Dark Mode Overrides */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #111;
+  color: #e5e5e5;
+}
+
+/* Global text color — catches all headings, paragraphs, spans etc. */
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+html.dark p, html.dark span, html.dark label, html.dark li, html.dark td, html.dark th,
+html.dark code, html.dark a:not([class*="text-vicert"]):not([class*="text-white"]) {
+  color: inherit;
+}
+
+/* Backgrounds */
+html.dark .bg-gray-100, html.dark .bg-gray-50 {
+  background-color: #1a1a1a !important;
+}
+
+html.dark .bg-white, html.dark .bg-swiss-white {
+  background-color: #1e1e1e !important;
+}
+
+html.dark .bg-gray-50\/50 {
+  background-color: #1a1a1a !important;
+}
+
+/* Text colors */
+html.dark .text-swiss-black {
+  color: #e5e5e5 !important;
+}
+
+html.dark .text-gray-800 {
+  color: #ccc !important;
+}
+
+html.dark .text-gray-600, html.dark .text-gray-500 {
+  color: #999 !important;
+}
+
+html.dark .text-gray-400, html.dark .text-gray-300 {
+  color: #777 !important;
+}
+
+/* Font-black headings (used heavily in this site) */
+html.dark .font-black, html.dark .font-bold, html.dark .font-semibold {
+  color: #f0f0f0;
+}
+
+/* Borders */
+html.dark .border-swiss-black {
+  border-color: #aaa !important;
+}
+
+html.dark .border-gray-200, html.dark .border-gray-100, html.dark .border-gray-300 {
+  border-color: #888 !important;
+}
+
+/* Black backgrounds (section headers, badges, active states) */
+html.dark .bg-swiss-black {
+  background-color: #2a2a2a !important;
+}
+
+html.dark .bg-swiss-black.text-white,
+html.dark .bg-swiss-black.text-swiss-white {
+  color: #fff !important;
+}
+
+html.dark header {
+  background-color: #0a0a0a !important;
+}
+
+/* Hover states */
+html.dark .hover\:bg-gray-100:hover {
+  background-color: #2a2a2a !important;
+}
+
+html.dark .hover\:bg-gray-50:hover {
+  background-color: #252525 !important;
+}
+
+/* Inputs */
+html.dark input.swiss-input, html.dark select.swiss-input,
+html.dark textarea.swiss-input, html.dark .swiss-input {
+  background-color: #1a1a1a !important;
+  border-color: #aaa !important;
+  color: #e5e5e5 !important;
+}
+
+html.dark .swiss-input::placeholder {
+  color: #666 !important;
+}
+
+html.dark .swiss-input:focus {
+  border-color: #0099ff !important;
+}
+
+/* Sidebar */
+html.dark aside {
+  background-color: #151515 !important;
+  border-color: #333 !important;
+}
+
+/* Cards */
+html.dark .swiss-card {
+  background-color: #1e1e1e !important;
+  border-color: #aaa !important;
+}
+
+/* Badges */
+html.dark .swiss-badge-black {
+  background-color: #333 !important;
+  color: #e5e5e5 !important;
+}
+
+/* Code blocks in markdown */
+html.dark .markdown-content code {
+  background-color: #2a2a2a !important;
+  color: #e5e5e5 !important;
+}
+
+html.dark .markdown-content pre {
+  background-color: #0a0a0a !important;
+}
+
+/* Cheat sheet section headers are already white-on-black, keep them */
+html.dark .bg-swiss-black .font-black,
+html.dark .bg-swiss-black .font-bold {
+  color: #fff;
+}
+
+/* Scrollbar */
+html.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Selection in dark mode */
+html.dark ::selection {
+  background-color: #0066cc;
+  color: #fff;
 }
