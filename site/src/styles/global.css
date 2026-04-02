@@ -183,3 +183,156 @@ textarea.swiss-input {
 .markdown-content blockquote { @apply border-l-4 border-vicert-blue pl-4 italic my-4; }
 .markdown-content strong { @apply font-bold; }
 .markdown-content a { @apply text-vicert-blue hover:text-vicert-blue-dark underline; }
+
+/* Dark Mode Overrides */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #111;
+  color: #e5e5e5;
+}
+
+/* Global text color — catches all headings, paragraphs, spans etc. */
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+html.dark p, html.dark span, html.dark label, html.dark li, html.dark td, html.dark th,
+html.dark code, html.dark a:not([class*="text-vicert"]):not([class*="text-white"]) {
+  color: inherit;
+}
+
+/* Backgrounds */
+html.dark .bg-gray-100, html.dark .bg-gray-50 {
+  background-color: #1a1a1a !important;
+}
+
+html.dark .bg-white, html.dark .bg-swiss-white {
+  background-color: #1e1e1e !important;
+}
+
+html.dark .bg-gray-50\/50 {
+  background-color: #1a1a1a !important;
+}
+
+/* Text colors */
+html.dark .text-swiss-black {
+  color: #e5e5e5 !important;
+}
+
+html.dark .text-gray-800 {
+  color: #ccc !important;
+}
+
+html.dark .text-gray-600, html.dark .text-gray-500 {
+  color: #999 !important;
+}
+
+html.dark .text-gray-400, html.dark .text-gray-300 {
+  color: #777 !important;
+}
+
+/* Font-black headings (used heavily in this site) */
+html.dark .font-black, html.dark .font-bold, html.dark .font-semibold {
+  color: #f0f0f0;
+}
+
+/* Borders */
+html.dark .border-swiss-black {
+  border-color: #aaa !important;
+}
+
+html.dark .border-gray-200, html.dark .border-gray-100, html.dark .border-gray-300 {
+  border-color: #888 !important;
+}
+
+/* Black backgrounds (section headers, badges, active states) */
+html.dark .bg-swiss-black {
+  background-color: #2a2a2a !important;
+}
+
+html.dark .bg-swiss-black.text-white,
+html.dark .bg-swiss-black.text-swiss-white {
+  color: #fff !important;
+}
+
+html.dark header {
+  background-color: #0a0a0a !important;
+}
+
+/* Hover states */
+html.dark .hover\:bg-gray-100:hover {
+  background-color: #2a2a2a !important;
+}
+
+html.dark .hover\:bg-gray-50:hover {
+  background-color: #252525 !important;
+}
+
+/* Inputs */
+html.dark input.swiss-input, html.dark select.swiss-input,
+html.dark textarea.swiss-input, html.dark .swiss-input {
+  background-color: #1a1a1a !important;
+  border-color: #aaa !important;
+  color: #e5e5e5 !important;
+}
+
+html.dark .swiss-input::placeholder {
+  color: #666 !important;
+}
+
+html.dark .swiss-input:focus {
+  border-color: #0099ff !important;
+}
+
+/* Sidebar */
+html.dark aside {
+  background-color: #151515 !important;
+  border-color: #333 !important;
+}
+
+/* Cards */
+html.dark .swiss-card {
+  background-color: #1e1e1e !important;
+  border-color: #aaa !important;
+}
+
+/* Badges */
+html.dark .swiss-badge-black {
+  background-color: #333 !important;
+  color: #e5e5e5 !important;
+}
+
+/* Code blocks in markdown */
+html.dark .markdown-content code {
+  background-color: #2a2a2a !important;
+  color: #e5e5e5 !important;
+}
+
+html.dark .markdown-content pre {
+  background-color: #0a0a0a !important;
+}
+
+/* Cheat sheet section headers are already white-on-black, keep them */
+html.dark .bg-swiss-black .font-black,
+html.dark .bg-swiss-black .font-bold {
+  color: #fff;
+}
+
+/* Scrollbar */
+html.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #444;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Selection in dark mode */
+html.dark ::selection {
+  background-color: #0066cc;
+  color: #fff;
+}
