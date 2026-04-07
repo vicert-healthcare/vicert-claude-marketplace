@@ -15,7 +15,7 @@ function PluginCard({ plugin }: { plugin: PluginMeta }) {
   return (
     <a
       href={`${BASE_PATH}plugin/?slug=${plugin.slug}`}
-      class="group block bg-swiss-white border-2 border-swiss-black p-6 cursor-pointer transition-shadow duration-200 hover:shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]"
+      class="group block bg-swiss-white border border-gray-300 rounded p-6 cursor-pointer transition-all duration-200 hover:shadow-md"
     >
       <div class="flex items-start justify-between mb-3">
         <h3 class="text-lg font-bold text-swiss-black group-hover:text-vicert-blue transition-colors leading-tight">
@@ -38,7 +38,7 @@ function PluginCard({ plugin }: { plugin: PluginMeta }) {
         </div>
       )}
 
-      <div class="flex items-center justify-between pt-4 border-t-2 border-gray-200">
+      <div class="flex items-center justify-between pt-4 border-t border-gray-200">
         <span class="text-xs font-bold uppercase tracking-wider text-swiss-blue">
           {plugin.category}
         </span>
@@ -128,7 +128,7 @@ export default function PluginBrowser() {
           value={search}
           onInput={(e) => setSearch((e.target as HTMLInputElement).value)}
           placeholder="Search plugins..."
-          class="w-full border-2 border-swiss-black py-3 pl-12 pr-4 bg-swiss-white text-swiss-black font-medium focus:outline-none focus:ring-2 focus:ring-vicert-blue"
+          class="w-full border border-gray-300 rounded py-3 pl-12 pr-4 bg-swiss-white text-swiss-black font-medium focus:outline-none focus:ring-2 focus:ring-vicert-blue/30 focus:border-vicert-blue"
         />
         {search && (
           <button
@@ -146,10 +146,10 @@ export default function PluginBrowser() {
       <div class="flex flex-wrap gap-2 mb-10">
         <button
           onClick={() => selectCategory("")}
-          class={`text-sm font-bold py-2 px-5 transition-all duration-200 ${
+          class={`text-sm font-bold py-2 px-5 rounded transition-all duration-200 ${
             !activeCategory
               ? "bg-swiss-black text-swiss-white"
-              : "bg-swiss-white text-swiss-black border-2 border-swiss-black hover:bg-gray-100"
+              : "bg-swiss-white text-swiss-black border border-gray-300 hover:bg-gray-100"
           }`}
         >
           All
@@ -158,10 +158,10 @@ export default function PluginBrowser() {
           <button
             key={cat.name}
             onClick={() => selectCategory(cat.name)}
-            class={`text-sm font-bold py-2 px-5 transition-all duration-200 capitalize ${
+            class={`text-sm font-bold py-2 px-5 rounded transition-all duration-200 capitalize ${
               activeCategory === cat.name
                 ? "bg-swiss-black text-swiss-white"
-                : "bg-swiss-white text-swiss-black border-2 border-swiss-black hover:bg-gray-100"
+                : "bg-swiss-white text-swiss-black border border-gray-300 hover:bg-gray-100"
             }`}
           >
             {cat.name}
@@ -171,7 +171,7 @@ export default function PluginBrowser() {
       </div>
 
       {/* Header */}
-      <div class="flex items-center justify-between mb-8 pb-4 border-b-2 border-swiss-black">
+      <div class="flex items-center justify-between mb-8 pb-4 border-b border-gray-300">
         <div class="flex items-baseline gap-3">
           <h2 class="text-2xl font-black">
             {activeCategory ? <span class="capitalize">{activeCategory}</span> : "All Plugins"}

@@ -534,7 +534,7 @@ export default function CheatSheet() {
               <button
                 key={s.id}
                 onClick={() => toggleSection(s.id)}
-                class={`whitespace-nowrap text-[11px] font-bold px-2.5 py-1 border-2 border-swiss-black transition-all flex items-center gap-1 flex-shrink-0 ${
+                class={`whitespace-nowrap text-[11px] font-bold px-2.5 py-1 border border-gray-300 rounded transition-all flex items-center gap-1 flex-shrink-0 ${
                   isActive
                     ? "bg-swiss-black text-white"
                     : "bg-white text-swiss-black hover:bg-gray-100"
@@ -579,7 +579,7 @@ export default function CheatSheet() {
           <div
             key={section.id}
             id={`cs-${section.id}`}
-            class="break-inside-avoid border-2 border-swiss-black bg-white"
+            class="break-inside-avoid border border-gray-300 rounded bg-white"
           >
             {/* Section header */}
             <div class="bg-swiss-black text-white px-4 py-2 flex items-center gap-2">
@@ -632,7 +632,7 @@ export default function CheatSheet() {
       </div>
 
       {filteredSections.length === 0 && (
-        <div class="border-2 border-gray-200 p-8 text-center mt-4">
+        <div class="border border-gray-200 p-8 text-center mt-4">
           <p class="text-sm text-gray-500 font-medium">
             {q ? `No items matching "${search}"` : "No sections selected"}
           </p>
