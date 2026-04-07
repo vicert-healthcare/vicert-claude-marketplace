@@ -11,3 +11,4 @@ site/.astro/
 site/node_modules/
 
 # Build artifacts
+slack-raw-content.txt

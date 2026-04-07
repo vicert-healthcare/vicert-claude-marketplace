@@ -131,9 +131,9 @@ function PluginCard({
   const installCommand = `claude plugin add ${plugin.dirName}`;
 
   return (
-    <article class="border-2 border-swiss-black bg-white hover:shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] transition-shadow">
+    <article class="border border-gray-300 rounded bg-white hover:shadow-md transition-shadow">
       {/* Card header */}
-      <div class="p-5 border-b-2 border-swiss-black">
+      <div class="p-5 border-b border-gray-300">
         <div class="flex items-start justify-between gap-3 mb-2">
           <div class="min-w-0">
             <h3 class="font-black text-base tracking-tight truncate">
@@ -157,7 +157,7 @@ function PluginCard({
 
       {/* Component badges */}
       {components.length > 0 && (
-        <div class="px-5 py-3 border-b-2 border-swiss-black flex flex-wrap gap-2">
+        <div class="px-5 py-3 border-b border-gray-300 flex flex-wrap gap-2">
           {components.map((type) => (
             <ComponentBadge
               key={type}
@@ -172,7 +172,7 @@ function PluginCard({
       <div class="px-5 py-3 flex items-center gap-3 bg-gray-50">
         {/* Install command */}
         <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 border-2 border-swiss-black bg-white px-3 py-2">
+          <div class="flex items-center gap-2 border border-gray-300 rounded bg-white px-3 py-2">
             <svg
               class="w-3.5 h-3.5 text-gray-400 flex-shrink-0"
               fill="none"
@@ -197,7 +197,7 @@ function PluginCard({
         {plugin.readme && (
           <button
             onClick={() => onToggleReadme(plugin.dirName)}
-            class={`flex items-center gap-1.5 text-xs font-bold px-3 py-2 border-2 border-swiss-black transition-colors flex-shrink-0 ${
+            class={`flex items-center gap-1.5 text-xs font-bold px-3 py-2 border border-gray-300 rounded transition-colors flex-shrink-0 ${
               plugin.readmeExpanded
                 ? "bg-swiss-black text-white"
                 : "bg-white text-swiss-black hover:bg-gray-100"
@@ -224,7 +224,7 @@ function PluginCard({
           href={`https://github.com/anthropics/claude-code/tree/main/plugins/${plugin.dirName}`}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 border-2 border-swiss-black bg-white text-swiss-black hover:bg-gray-100 transition-colors flex-shrink-0"
+          class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 border border-gray-300 rounded bg-white text-swiss-black hover:bg-gray-100 transition-colors flex-shrink-0"
         >
           <svg
             class="w-3.5 h-3.5"
@@ -239,7 +239,7 @@ function PluginCard({
 
       {/* README expanded */}
       {plugin.readmeExpanded && readmeHtml && (
-        <div class="border-t-2 border-swiss-black px-5 py-4">
+        <div class="border-t border-gray-300 px-5 py-4">
           <div
             class="markdown-content text-sm"
             dangerouslySetInnerHTML={{ __html: readmeHtml }}
@@ -248,7 +248,7 @@ function PluginCard({
       )}
 
       {plugin.loading && (
-        <div class="border-t-2 border-swiss-black px-5 py-3 bg-gray-50">
+        <div class="border-t border-gray-300 px-5 py-3 bg-gray-50">
           <p class="text-xs text-gray-400 font-medium animate-pulse">
             Loading plugin details...
           </p>
@@ -408,7 +408,7 @@ export default function OfficialPlugins() {
 
   if (loading) {
     return (
-      <div class="border-2 border-gray-200 p-10 text-center">
+      <div class="border border-gray-200 p-10 text-center">
         <p class="text-sm text-gray-600 font-medium">
           Fetching plugins from GitHub...
         </p>
@@ -516,7 +516,7 @@ export default function OfficialPlugins() {
       </div>
 
       {filtered.length === 0 && (
-        <div class="border-2 border-gray-200 p-8 text-center">
+        <div class="border border-gray-200 p-8 text-center">
           <p class="text-sm text-gray-500 font-medium">
             No plugins found
             {search ? ` matching "${search}"` : ""}

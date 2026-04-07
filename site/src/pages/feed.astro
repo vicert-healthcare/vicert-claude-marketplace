@@ -1,0 +1,69 @@
+---
+import Base from "../layouts/Base.astro";
+import BlogFeed from "../islands/BlogFeed";
+import { getCollection } from "astro:content";
+
+const entries = await getCollection("posts");
+
+const posts = entries.map((entry) => {
+  const { data, body = "", id } = entry;
+
+  // Split body into main content and replies (separated by ---)
+  const parts = (body ?? "").split(/\n---\n/);
+  const mainBody = parts[0]?.trim() ?? "";
+  const repliesRaw = parts.slice(1).join("\n").trim();
+
+  // Parse replies: **Reply from Author Name:** followed by text
+  const replies: { author: string; text: string }[] = [];
+  if (repliesRaw) {
+    const replyBlocks = repliesRaw.split(/\*\*Reply from /);
+    for (const block of replyBlocks) {
+      const trimmed = block.trim();
+      if (!trimmed) continue;
+      const nameMatch = trimmed.match(/^(.+?):\*\*\s*([\s\S]*)/);
+      if (nameMatch) {
+        replies.push({
+          author: nameMatch[1].trim(),
+          text: nameMatch[2].trim(),
+        });
+      }
+    }
+  }
+
+  return {
+    slug: id.replace(/\.md$/, ""),
+    title: data.title,
+    author: data.author,
+    date: data.date,
+    tags: data.tags,
+    type: data.type,
+    url: data.url ?? "",
+    body: mainBody,
+    replies,
+  };
+});
+
+// Sort by date descending (newest first)
+posts.sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+
+---
+
+<Base
+  title="Feed — Vicert Marketplace"
+  description="Team knowledge base for AI tips, plugin updates, and Show and Tell recaps"
+>
+  <section class="border-b border-gray-300">
+    <div class="p-6 lg:p-8 py-6 sm:py-8">
+      <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Feed</h1>
+      <p class="text-sm text-gray-500 mt-1">
+        Tips, tools, demos, news and discussions from #gen-ai
+      </p>
+    </div>
+  </section>
+
+  <section class="p-6 lg:p-8">
+    <BlogFeed client:load posts={posts} />
+  </section>
+</Base>

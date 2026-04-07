@@ -139,7 +139,7 @@ function FileListEditor({
       ) : (
         <div class="space-y-3">
           {files.map((file, index) => (
-            <div key={file.id} class="border-2 border-gray-200 bg-white">
+            <div key={file.id} class="border border-gray-200 bg-white">
               <div class="flex items-center gap-2 px-3 py-2 bg-gray-100 border-b border-gray-200">
                 <span class="text-[10px] font-bold text-gray-300 uppercase tracking-wider w-5">{String(index + 1).padStart(2, "0")}</span>
                 <input
@@ -777,7 +777,7 @@ export default function PluginEditor() {
 
   if (prUrl) {
     return (
-      <div class="border-2 border-swiss-black p-10 text-center">
+      <div class="border border-gray-300 rounded p-10 text-center">
         <div class="w-12 h-12 bg-green-100 mx-auto mb-4 flex items-center justify-center">
           <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -801,7 +801,7 @@ export default function PluginEditor() {
 
   if (loading || catalogLoading) {
     return (
-      <div class="border-2 border-gray-200 p-10 text-center">
+      <div class="border border-gray-200 p-10 text-center">
         <p class="text-sm text-gray-600 font-medium">Loading plugin data...</p>
       </div>
     );
@@ -821,7 +821,7 @@ export default function PluginEditor() {
         {completionSteps.map((step, i) => (
           <div key={i} class="flex items-center gap-2">
             <div class={`w-5 h-5 flex items-center justify-center text-[10px] font-bold ${
-              step.done ? "bg-swiss-black text-white" : "border-2 border-gray-200 text-gray-300"
+              step.done ? "bg-swiss-black text-white" : "border border-gray-200 text-gray-300"
             }`}>
               {step.done ? (
                 <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
@@ -863,7 +863,7 @@ export default function PluginEditor() {
       <FolderUploader onFilesLoaded={handleFolderUpload} />
 
       {/* Metadata */}
-      <div class="border-2 border-swiss-black bg-white p-6">
+      <div class="border border-gray-300 rounded bg-white p-6">
         <SectionHeader step="01" title="Metadata" description="Basic information about your plugin." />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <FormField label="Plugin Name" required hint="lowercase, kebab-case (e.g. my-plugin)">
@@ -934,7 +934,7 @@ export default function PluginEditor() {
       </div>
 
       {/* Components */}
-      <div class="border-2 border-swiss-black bg-white p-6 space-y-6">
+      <div class="border border-gray-300 rounded bg-white p-6 space-y-6">
         <SectionHeader step="02" title="Components" description="Add skills, agents, commands, or other files." />
 
         <FileListEditor
@@ -985,7 +985,7 @@ export default function PluginEditor() {
       </div>
 
       {/* README */}
-      <div class="border-2 border-swiss-black bg-white p-6">
+      <div class="border border-gray-300 rounded bg-white p-6">
         <SectionHeader step="03" title="README" description="Documentation shown on the plugin detail page. Markdown supported." />
         <textarea
           value={data.readme}
@@ -997,7 +997,7 @@ export default function PluginEditor() {
       </div>
 
       {/* Submit */}
-      <div class="border-2 border-swiss-black bg-white p-6">
+      <div class="border border-gray-300 rounded bg-white p-6">
         <SectionHeader step="04" title="Submit" />
 
         {isMetadataValid && hasComponents ? (

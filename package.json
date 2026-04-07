@@ -9,7 +9,8 @@
     "validate": "node scripts/validate.js",
     "build:site": "npm run build:marketplace && npm run --prefix site build",
     "dev:site": "npm run --prefix site dev",
-    "build": "npm run build:marketplace && npm run --prefix site build"
+    "build": "npm run build:marketplace && npm run --prefix site build",
+    "sync:slack": "node scripts/sync-slack.js"
   },
   "repository": {
     "type": "git",

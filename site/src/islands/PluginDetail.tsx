@@ -170,7 +170,7 @@ export default function PluginDetail() {
             </div>
             <a
               href={`${BASE_PATH}editor?plugin=${plugin.slug}`}
-              class="text-sm font-bold text-swiss-black border-2 border-swiss-black hover:bg-gray-100 px-4 py-2 transition-colors whitespace-nowrap ml-4"
+              class="text-sm font-bold text-swiss-black border border-gray-300 rounded hover:bg-gray-100 px-4 py-2 transition-colors whitespace-nowrap ml-4"
             >
               Edit
             </a>
@@ -188,7 +188,7 @@ export default function PluginDetail() {
           </div>
 
           {readmeHtml && (
-            <div class="border-t-2 border-swiss-black pt-10">
+            <div class="border-t border-gray-300 pt-10">
               <div
                 class="markdown-content"
                 dangerouslySetInnerHTML={{ __html: readmeHtml }}
@@ -200,14 +200,14 @@ export default function PluginDetail() {
         {/* Sidebar */}
         <aside class="space-y-6">
           {/* Details */}
-          <div class="bg-swiss-white border-2 border-swiss-black p-6">
+          <div class="bg-swiss-white border border-gray-300 rounded p-6">
             <h3 class="text-sm font-bold uppercase tracking-wider mb-4">Details</h3>
             <dl class="space-y-3 text-sm">
               <div class="flex justify-between">
                 <dt class="text-gray-600 font-medium">Version</dt>
                 <dd class="font-bold">{plugin.version}</dd>
               </div>
-              <div class="border-t-2 border-gray-200" />
+              <div class="border-t border-gray-200" />
               <div class="flex justify-between">
                 <dt class="text-gray-600 font-medium">Category</dt>
                 <dd>
@@ -221,7 +221,7 @@ export default function PluginDetail() {
               </div>
               {authorName && (
                 <>
-                  <div class="border-t-2 border-gray-200" />
+                  <div class="border-t border-gray-200" />
                   <div class="flex justify-between">
                     <dt class="text-gray-600 font-medium">Author</dt>
                     <dd class="font-bold">{authorName}</dd>
@@ -230,7 +230,7 @@ export default function PluginDetail() {
               )}
               {plugin.license && (
                 <>
-                  <div class="border-t-2 border-gray-200" />
+                  <div class="border-t border-gray-200" />
                   <div class="flex justify-between">
                     <dt class="text-gray-600 font-medium">License</dt>
                     <dd class="font-bold">{plugin.license}</dd>
@@ -242,7 +242,7 @@ export default function PluginDetail() {
 
           {/* Components */}
           {plugin.components.length > 0 && (
-            <div class="bg-swiss-white border-2 border-swiss-black p-6">
+            <div class="bg-swiss-white border border-gray-300 rounded p-6">
               <h3 class="text-sm font-bold uppercase tracking-wider mb-4">Components</h3>
               <ul class="space-y-2">
                 {plugin.components.map((c) => {
@@ -260,7 +260,7 @@ export default function PluginDetail() {
 
           {/* Tags */}
           {plugin.tags.length > 0 && (
-            <div class="bg-swiss-white border-2 border-swiss-black p-6">
+            <div class="bg-swiss-white border border-gray-300 rounded p-6">
               <h3 class="text-sm font-bold uppercase tracking-wider mb-4">Tags</h3>
               <div class="flex flex-wrap gap-2">
                 {plugin.tags.map((k) => (
@@ -273,7 +273,7 @@ export default function PluginDetail() {
           )}
 
           {/* Source */}
-          <div class="bg-swiss-white border-2 border-swiss-black p-6">
+          <div class="bg-swiss-white border border-gray-300 rounded p-6">
             <h3 class="text-sm font-bold uppercase tracking-wider mb-4">Source</h3>
             <a
               href={`https://github.com/${REPO_OWNER}/${REPO_NAME}/tree/main/plugins/${plugin.slug}`}
@@ -286,7 +286,7 @@ export default function PluginDetail() {
           </div>
 
           {/* Change History */}
-          <div class="bg-swiss-white border-2 border-swiss-black p-6">
+          <div class="bg-swiss-white border border-gray-300 rounded p-6">
             <h3 class="text-sm font-bold uppercase tracking-wider mb-4">History</h3>
             <ChangeHistory pluginSlug={plugin.slug} />
           </div>

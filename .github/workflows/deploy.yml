@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    # Every day at 6:00 UTC (8:00 CET)
+    - cron: "0 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,7 +20,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,6 +42,17 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .claude-plugin/marketplace.json
           git diff --cached --quiet || git commit -m "chore: regenerate marketplace.json [skip ci]" && git push
+
+      - name: Sync Slack posts
+        run: node scripts/sync-slack.js
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_NAME: gen-ai
+
+      - name: Commit new posts if any
+        run: |
+          git add site/src/content/posts/
+          git diff --cached --quiet || (git commit -m "chore: sync slack posts [skip ci]" && git push)
 
       - name: Install site dependencies
         working-directory: site

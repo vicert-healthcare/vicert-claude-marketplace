@@ -91,10 +91,10 @@ export default function PendingReviews() {
               setLoading(true);
               setFilter(f);
             }}
-            class={`text-sm font-bold py-2 px-5 transition-all duration-200 capitalize ${
+            class={`text-sm font-bold py-2 px-5 rounded transition-all duration-200 capitalize ${
               filter === f
                 ? "bg-swiss-black text-swiss-white"
-                : "bg-swiss-white text-swiss-black border-2 border-swiss-black hover:bg-gray-100"
+                : "bg-swiss-white text-swiss-black border border-gray-300 hover:bg-gray-100"
             }`}
           >
             {f}
@@ -116,7 +116,7 @@ export default function PendingReviews() {
                 href={pr.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block bg-swiss-white border-2 border-swiss-black p-5 cursor-pointer transition-shadow duration-200 hover:shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]"
+                class="block bg-swiss-white border border-gray-300 rounded p-5 cursor-pointer transition-all duration-200 hover:shadow-md"
               >
                 <div class="flex items-start justify-between gap-4">
                   <div class="flex-1 min-w-0">

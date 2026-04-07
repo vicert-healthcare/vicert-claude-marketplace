@@ -122,7 +122,7 @@ export default function ClaudeCodeDocs() {
   return (
     <div class="flex flex-col">
       {/* Search + Topics bar */}
-      <div class="border-b-2 border-swiss-black bg-white p-4 pb-0">
+      <div class="border-b border-gray-300 bg-white p-4 pb-0">
         {/* Search */}
         <div class="relative mb-4">
           <svg
@@ -207,7 +207,7 @@ export default function ClaudeCodeDocs() {
 
       {/* Search results summary */}
       {search && searchResults !== null && (
-        <div class="border-b-2 border-swiss-black px-5 py-3 bg-gray-50">
+        <div class="border-b border-gray-300 px-5 py-3 bg-gray-50">
           <p class="text-xs font-medium text-gray-600">
             {searchResults.length === 0
               ? `No topics matching "${search}"`
@@ -229,7 +229,7 @@ export default function ClaudeCodeDocs() {
           </div>
         ) : (
           <>
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b-2 border-swiss-black">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-gray-300">
               <h2 class="text-xl font-black tracking-tight">
                 {activeTopic?.label}
               </h2>

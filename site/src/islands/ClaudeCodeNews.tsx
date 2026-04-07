@@ -90,7 +90,7 @@ function EntryCard({
   const bulletCount = (entry.body.match(/^- /gm) || []).length;
 
   return (
-    <article class="border-2 border-swiss-black bg-white">
+    <article class="border border-gray-300 rounded bg-white">
       <button
         onClick={() => setExpanded(!expanded)}
         class="w-full text-left p-5 flex items-start justify-between gap-4 hover:bg-gray-100 transition-colors"
@@ -124,7 +124,7 @@ function EntryCard({
       </button>
 
       {expanded && bodyHtml && (
-        <div class="border-t-2 border-swiss-black px-5 py-4">
+        <div class="border-t border-gray-300 px-5 py-4">
           <div
             class="markdown-content text-sm"
             dangerouslySetInnerHTML={{ __html: bodyHtml }}
@@ -174,7 +174,7 @@ export default function ClaudeCodeNews() {
 
   if (loading) {
     return (
-      <div class="border-2 border-gray-200 p-10 text-center">
+      <div class="border border-gray-200 p-10 text-center">
         <p class="text-sm text-gray-600 font-medium">Loading changelog...</p>
       </div>
     );
@@ -284,7 +284,7 @@ export default function ClaudeCodeNews() {
       </div>
 
       {filtered.length === 0 && search && (
-        <div class="border-2 border-gray-200 p-8 text-center">
+        <div class="border border-gray-200 p-8 text-center">
           <p class="text-sm text-gray-600 font-medium">
             No versions found matching "{search}"
           </p>
@@ -294,7 +294,7 @@ export default function ClaudeCodeNews() {
       {!search && visibleCount < entries.length && (
         <button
           onClick={() => setVisibleCount((c) => c + 20)}
-          class="mt-6 w-full border-2 border-swiss-black py-3 text-sm font-bold hover:bg-gray-100 transition-colors"
+          class="mt-6 w-full border border-gray-300 rounded py-3 text-sm font-bold hover:bg-gray-100 transition-colors"
         >
           Show more ({entries.length - visibleCount} remaining)
         </button>
