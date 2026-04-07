@@ -53,6 +53,7 @@ const AUTHOR_AVATARS: Record<string, string> = {
   "Milan Ilic": "milan-ilic.png",
   "Nenad Damnjanović": "nenad-damnjanovic.jpg",
   "Vladimir Petrovic": "vladimir-petrovic.png",
+  "Veljko Rajkovic": "veljko-rajkovic.png",
 };
 
 // Consistent avatar colors per author (hashed from name) — used as fallback
