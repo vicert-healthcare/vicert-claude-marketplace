@@ -31,3 +31,12 @@ radi! https://vicert-healthcare.github.io/vicert-claude-marketplace/feed/
 **Reply from Maja Bogdanovic:**
 @Nikola Markovic testirano radi u svim slucajevima 😄
 
+**Reply from Dejan Radmanovic:**
+Hteo bih sve da vas podsetim smatram da se podrazumeva ali neka ostane zapisano, posto se content nasih slack public kanala sada exposuje kroz marketplace da ne sherujete kljuceve ili tako neke stvari kroz javne kanale komunikacije
+
+**Reply from Dejan Nedic:**
+Koliko ja znam - samo gen-ai kanal je ukljucen u ovu pricu
+
+**Reply from Dejan Radmanovic:**
+Tako je ali svakako je dobra praksa
+
