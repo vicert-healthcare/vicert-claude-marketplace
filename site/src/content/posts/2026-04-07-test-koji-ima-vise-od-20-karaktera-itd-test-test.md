@@ -40,3 +40,9 @@ Koliko ja znam - samo gen-ai kanal je ukljucen u ovu pricu
 **Reply from Dejan Radmanovic:**
 Tako je ali svakako je dobra praksa
 
+**Reply from Bojan Todorovic:**
+Upd:
+Markeplace je trenutno down. Unpublish-ovao sam ga, dok ga ne budemo napravili verziju iskljucivo za internu upotrebu, a ne kao publicly accessible website.
+
+Resimo Miki i ja to u utorak/sredu.
+
