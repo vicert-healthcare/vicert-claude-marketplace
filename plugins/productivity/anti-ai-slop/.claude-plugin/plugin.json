@@ -1,0 +1,22 @@
+{
+  "name": "anti-ai-slop",
+  "version": "1.0.0",
+  "description": "Prevents AI-characteristic writing patterns in all text output including code comments, commit messages, PR descriptions, documentation, and chat responses. Use this skill always, it governs the agent's writing style across every interaction.",
+  "author": {
+    "name": "vicert-healthcare"
+  },
+  "keywords": [
+    "ai-slop",
+    "writing-style",
+    "tone",
+    "prose",
+    "anti-slop",
+    "human-writing",
+    "plain-language",
+    "style-guide",
+    "code-comments",
+    "commit-messages",
+    "documentation"
+  ],
+  "license": "MIT"
+}
