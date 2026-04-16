@@ -148,6 +148,33 @@
       ]
     },
     {
+      "name": "anti-ai-slop",
+      "source": "./plugins/productivity/anti-ai-slop",
+      "description": "Prevents AI-characteristic writing patterns in all text output including code comments, commit messages, PR descriptions, documentation, and chat responses. Use this skill always, it governs the agent's writing style across every interaction.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "components": [
+        "skills"
+      ],
+      "author": {
+        "name": "vicert-healthcare"
+      },
+      "tags": [
+        "ai-slop",
+        "writing-style",
+        "tone",
+        "prose",
+        "anti-slop",
+        "human-writing",
+        "plain-language",
+        "style-guide",
+        "code-comments",
+        "commit-messages",
+        "documentation"
+      ],
+      "license": "MIT"
+    },
+    {
       "name": "commit-helper",
       "source": "./plugins/productivity/commit-helper",
       "description": "Git commit workflow commands for conventional commits, interactive staging, and PR descriptions",
