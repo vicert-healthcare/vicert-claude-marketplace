@@ -31,3 +31,10 @@ https://github.com/0x4m4/hexstrike-ai
 Hajde napravi 1/2-pager kako bi ovo shto si napisao formulisao u oblliku Vicert-ove ponude recimo INH-u (ili Arine/Carenet/Canvas-u for that matter) pa da stavimo to na sto i klijentima a i novim prospektima.
 cc: @Slobodan Dimic @Filip Jankovic
 
+**Reply from Dejan Radmanovic:**
+Nisam siguran da mi bas imamo najbolje ekspertize u cyber security sferi, ali mozda svakako mozemo da se "Doskolujemo" ili zaposlimo neke experte u tom smeru.
+
+Svakako evo ga neki mini dokumentic mozda to @Filip Jankovic moze da iskoristi da prefolumirise da to vise izgleda pre kao neki sales pitch nego ovako mashed up post:
+
+https://docs.google.com/document/d/13nOG9YPwcotO25F1T_6W-RBf7mfDwn-OtDv-mm4fE2U/edit?tab=t.0
+
