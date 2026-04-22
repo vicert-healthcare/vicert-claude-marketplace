@@ -38,3 +38,16 @@ Svakako evo ga neki mini dokumentic mozda to @Filip Jankovic moze da iskoristi d
 
 https://docs.google.com/document/d/13nOG9YPwcotO25F1T_6W-RBf7mfDwn-OtDv-mm4fE2U/edit?tab=t.0
 
+**Reply from Voja Lalich:**
+Hvala za brz turaroud @Dejan Radmanovic - ovo je zanimljiv dokument, svakako daje dobar overview of the risks and problems i stoga a **need** in the market i kako je to eskaliralo sa AI tools.
+
+Stoji i da je ovo nov teren za nas … ali tu se negde krije i opportunity ako mozze da nadjemo neki presek nasheg rada u HIT-u i CyberSec-a.
+
+Hajde uzmi na sebe da organizujesh neshto i porazgovaraj ti tu sa kolegama i koleginicama i vidi da li ima ko josh da je zainteresovan da uccestvuje u jednoj radnoj grupi. Vidite da li se rodi neka zanimljiva ideja and if so, podeli ovde i/ili na weekly shareing kada bude zgodno.
+
+Ovo je uvek bio veliki teren za igru ali je sa AI-om to sada neka nova konfiguracija i veoma me zanima shta vi tu vidite i mislite i da li mozzete da nadjete neki konkretan, i legalan, ugao gde mi mozzemo da igramo?
+
+How can we be sure that Mythos/others will not blow up our stuff?
+How can we help INH, Arine , Carenet or Canvas - or a NewCo, make sure that their stuff is not taken apart?
+Or, may be how can we make business attacking … give it a think ladies and gents.
+
