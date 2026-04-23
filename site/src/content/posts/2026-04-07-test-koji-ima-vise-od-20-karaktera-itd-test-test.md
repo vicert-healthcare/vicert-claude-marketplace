@@ -46,3 +46,15 @@ Markeplace je trenutno down. Unpublish-ovao sam ga, dok ga ne budemo napravili v
 
 Resimo Miki i ja to u utorak/sredu.
 
+**Reply from Dejan Nedic:**
+@Bojan Todorovic Crni Boki, uvalio si me u objasnjavanje Claude-u da nisi terorista i da si se samo zezao 😄
+
+**Reply from Dejan Nedic:**
+
+
+**Reply from Dejan Radmanovic:**
+Ovo je nesto najbolje sto sam video poslednjih dana. Dobra fora skroz ja ne mogu da verujem ahhahahhah 😄
+
+**Reply from Nikola Markovic:**
+Zamisli da je stvarno prosao prompt...😂
+
